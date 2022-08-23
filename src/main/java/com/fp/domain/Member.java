@@ -18,17 +18,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email; // 아이디
 
-    @Column(nullable = false)
     private String password; // 비밀번호
 
-    @Column(nullable = false)
     private String userName; // 이름
 
-    @Column(nullable = false)
-    @ColumnDefault("소상공인")
     private String job; // 직업(소상공인)
 
     private String region; //지역
