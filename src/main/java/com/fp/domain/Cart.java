@@ -1,29 +1,25 @@
-package com.fp.entity;
+package com.fp.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Entity
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(value = EnumType.STRING)
-    private ProductType 상품유형;
-
-    private String 은행이름;
-
-    private String 상품이름;
-
-    private Long 금액;
+    // 1 : N 관계
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
+    private List<CartAndProduct> cartAndProducts = new ArrayList<>();
 
 }

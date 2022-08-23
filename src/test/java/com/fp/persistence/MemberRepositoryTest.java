@@ -1,6 +1,6 @@
 package com.fp.persistence;
 
-import com.fp.entity.Member;
+import com.fp.domain.Member;
 import org.junit.jupiter.api.Test;
 
 public class MemberRepositoryTest {
