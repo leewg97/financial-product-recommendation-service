@@ -2,7 +2,6 @@ package com.fp.web.controller;
 
 import com.fp.domain.Member;
 import com.fp.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,8 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MemberController {
 
-    @Autowired
-    private MemberService memberService;
+    // 생성자 주입
+    private final MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     // 회원가입 처리
     @PostMapping("/register")
