@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Builder
 @Entity
 public class Product {
 
@@ -27,8 +26,10 @@ public class Product {
 
     private Long supporterAmount; // 지원 금액
 
-    // 1 : N 관계
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private List<MemberAndProduct> memberAndProducts = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<Member> members = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<Cart> carts = new ArrayList<>();
 
 }
