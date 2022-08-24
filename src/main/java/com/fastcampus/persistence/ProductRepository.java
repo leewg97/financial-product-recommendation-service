@@ -11,4 +11,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByProductContentContaining(String searchKeyword);
 
+    List<Product> findBySupporterAmountGreaterThanEqualAndSupporterRegion(int supporterAmount,String region);
+
 }

@@ -13,4 +13,5 @@ public class ProductDto {
     private SearchCondition searchCondition;
 
     private String searchKeyword;
+    
 }

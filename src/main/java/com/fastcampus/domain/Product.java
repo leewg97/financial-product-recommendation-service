@@ -24,7 +24,7 @@ public class Product {
 
     private String supporterRegion; // 지원 지역
 
-    private  int supporterAmount; // 지원 금액
+    private int supporterAmount; // 지원 금액
 
     @OneToMany(mappedBy = "product")
     private List<Cart> carts = new ArrayList<>();
