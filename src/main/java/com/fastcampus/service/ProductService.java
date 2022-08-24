@@ -21,6 +21,17 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
+    // 상품 검색
+    @Transactional
+    public List<Product> productList(ProductDto productDto) {
+        if (productDto.getSearchCondition().equals(SearchCondition.TITLE)) {
+            return productRepository.findByProductNameContaining(productDto.getSearchKeyword());
+        } else if (productDto.getSearchCondition().equals(SearchCondition.CONTENT)) {
+            return productRepository.findByProductContentContaining(productDto.getSearchKeyword());
+        }
+        return productRepository.findAll();
+    }
+
     // 맞춤상품
     @Transactional
     public List<Product> customProduct(Long id) {
@@ -37,7 +48,6 @@ public class ProductService {
         }
         return new ArrayList<>();
     }
-
 
 //    // 상품 조회
 //    @Transactional

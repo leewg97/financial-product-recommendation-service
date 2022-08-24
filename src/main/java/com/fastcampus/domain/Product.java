@@ -18,6 +18,8 @@ public class Product {
 
     private String productName; // 상품 이름
 
+    private String productContent; // 상품 내용
+
     private String supporterName; // 지원 은행
 
     private String supporterRegion; // 지원 지역

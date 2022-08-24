@@ -19,13 +19,12 @@ public class Member {
 
     private String password; // 비밀번호
 
-    private String userName; // 이름
+    private String username; // 이름
 
     private String job; // 직업(소상공인)
 
     private String region; //지역
 
     private int hopeAmount; // 희망하는 지원 금액
-
 
 }
