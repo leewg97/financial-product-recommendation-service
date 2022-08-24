@@ -30,7 +30,5 @@ public class Member {
 
     private int hopeAmount; // 희망하는 지원 금액
 
-    @ManyToOne()
-    @JoinColumn(name = "PRODUCT_ID")
-    private Product product;
+
 }

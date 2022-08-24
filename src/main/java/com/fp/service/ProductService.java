@@ -1,19 +1,43 @@
 package com.fp.service;
 
+import com.fp.domain.Member;
 import com.fp.domain.Product;
+import com.fp.persistence.MemberRepository;
 import com.fp.persistence.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final MemberRepository memberRepository;
+
+    // 맞춤상품
+    @Transactional
+    public List<Product> customProduct(Long id) {
+        Optional<Member> member = memberRepository.findById(id);
+        if (member.isPresent()) {
+            Member findMember = member.get();
+            int amount = findMember.getHopeAmount();
+            String region = findMember.getRegion();
+
+            List<Product> productList = productRepository.findBySupporterAmountGreaterThanEqualAndSupporterRegion(amount, region);
+            System.out.println(productList);
+            log.info(productList.toString());
+            return productList;
+        }
+        return new ArrayList<>();
+    }
+
 
 //    // 상품 조회
 //    @Transactional
