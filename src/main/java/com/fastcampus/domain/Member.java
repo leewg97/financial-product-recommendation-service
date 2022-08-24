@@ -1,11 +1,8 @@
-package com.fp.domain;
+package com.fastcampus.domain;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,7 +19,7 @@ public class Member {
 
     private String password; // 비밀번호
 
-    private String userName; // 이름
+    private String username; // 이름
 
     private String job; // 직업(소상공인)
 
@@ -30,7 +27,4 @@ public class Member {
 
     private int hopeAmount; // 희망하는 지원 금액
 
-    @ManyToOne()
-    @JoinColumn(name = "PRODUCT_ID")
-    private Product product;
 }
