@@ -1,13 +1,8 @@
-package com.fp.service;
+package com.fastcampus.service;
 
-import com.fp.domain.Cart;
-import com.fp.persistence.CartRepository;
+import com.fastcampus.persistence.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 public class CartService {

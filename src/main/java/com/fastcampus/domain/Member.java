@@ -1,11 +1,8 @@
-package com.fp.domain;
+package com.fastcampus.domain;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor

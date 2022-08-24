@@ -1,4 +1,4 @@
-package com.fp;
+package com.fastcampus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

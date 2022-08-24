@@ -1,12 +1,8 @@
-package com.fp.service;
+package com.fastcampus.service;
 
-import com.fp.domain.Member;
-import com.fp.persistence.MemberRepository;
+import com.fastcampus.persistence.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class MemberService {

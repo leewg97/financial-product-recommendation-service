@@ -1,9 +1,9 @@
-package com.fp.service;
+package com.fastcampus.service;
 
-import com.fp.domain.Member;
-import com.fp.domain.Product;
-import com.fp.persistence.MemberRepository;
-import com.fp.persistence.ProductRepository;
+import com.fastcampus.domain.Member;
+import com.fastcampus.domain.Product;
+import com.fastcampus.persistence.MemberRepository;
+import com.fastcampus.persistence.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

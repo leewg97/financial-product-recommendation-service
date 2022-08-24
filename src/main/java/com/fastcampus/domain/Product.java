@@ -1,4 +1,4 @@
-package com.fp.domain;
+package com.fastcampus.domain;
 
 import lombok.*;
 

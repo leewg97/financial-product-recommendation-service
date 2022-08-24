@@ -1,6 +1,6 @@
-package com.fp.persistence;
+package com.fastcampus.persistence;
 
-import com.fp.domain.Product;
+import com.fastcampus.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

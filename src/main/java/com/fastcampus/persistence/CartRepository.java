@@ -1,6 +1,6 @@
-package com.fp.persistence;
+package com.fastcampus.persistence;
 
-import com.fp.domain.Cart;
+import com.fastcampus.domain.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
