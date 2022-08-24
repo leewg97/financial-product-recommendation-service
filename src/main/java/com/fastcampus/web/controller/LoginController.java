@@ -1,4 +1,4 @@
-package com.fp.web.controller;
+package com.fastcampus.web.controller;
 
 import org.springframework.stereotype.Controller;
 
