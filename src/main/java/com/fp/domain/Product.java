@@ -16,18 +16,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String productType; // 상품 타입
-
     private String productName; // 상품 이름
 
     private String supporterName; // 지원 은행
 
     private String supporterRegion; // 지원 지역
 
-    private Long supporterAmount; // 지원 금액
-
-    @OneToMany(mappedBy = "product")
-    private List<Member> members = new ArrayList<>();
+    private int supporterAmount; // 지원 금액
 
     @OneToMany(mappedBy = "product")
     private List<Cart> carts = new ArrayList<>();
