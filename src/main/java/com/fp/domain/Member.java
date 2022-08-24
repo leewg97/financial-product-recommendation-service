@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Builder
 @Entity
 public class Member {
 
@@ -29,9 +28,9 @@ public class Member {
 
     private String region; //지역
 
-    private String hopeAmount; // 희망하는 지원 금액
+    private int hopeAmount; // 희망하는 지원 금액
 
-    // 1 : N 관계
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<MemberAndProduct> memberAndProducts = new ArrayList<>();
+    @ManyToOne()
+    @JoinColumn(name = "PRODUCT_ID")
+    private Product product;
 }

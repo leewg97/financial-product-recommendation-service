@@ -1,5 +1,6 @@
 package com.fp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +19,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 1 : N 관계
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
-    private List<CartAndProduct> cartAndProducts = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="MEMBER_ID")
+    private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Product_ID")
+    private Product product;
 }
