@@ -52,8 +52,15 @@ public class ProductService {
 
     // 상품 조회
     @Transactional
-    public Product getProduct(long id) {
-        return productRepository.findById(id).get();
+    public Product getProduct(long id) throws Exception {
+        Optional<Product> findProduct =  productRepository.findById(id);
+
+        if(findProduct.isPresent()){
+            return findProduct.get();
+        }else{
+            throw new Exception("상품을 찾을 수 없습니다.");
+        }
+
     }
 
     // 상품 목록
