@@ -2,17 +2,20 @@ package com.fastcampus.service;
 
 import com.fastcampus.domain.Member;
 import com.fastcampus.persistence.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class MemberService {
 
+    // 생성자 주입
     private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     // 회원 등록
     @Transactional

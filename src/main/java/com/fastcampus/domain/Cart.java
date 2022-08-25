@@ -16,12 +16,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 회원 N : 1 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id")
+    @JoinColumn(name = "MEMBER_ID") // FK
     private Member member;
 
+    // 상품 N : 1 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "PRODUCT_ID") // FK
     private Product product;
-
 }
