@@ -25,13 +25,16 @@ public class ProductService {
 
     // 상품 검색
     @Transactional
-    public List<Product> SearchProducts(ProductDto productDto) {
+    public List<ProductDto.Response> SearchProducts(ProductDto.Request productDto) {
         if (productDto.getSearchCondition().equals(SearchCondition.TITLE)) {
-            return productRepository.findByProductNameContaining(productDto.getSearchKeyword());
+            List<Product> productList = productRepository.findByProductNameContaining(productDto.getSearchKeyword());
+            return getProductRes(productList);
         } else if (productDto.getSearchCondition().equals(SearchCondition.CONTENT)) {
-            return productRepository.findByProductContentContaining(productDto.getSearchKeyword());
+            List<Product> productList = productRepository.findByProductContentContaining(productDto.getSearchKeyword());
+            return getProductRes(productList);
         }
-        return productRepository.findAll();
+        List<Product> productList = productRepository.findAll();
+        return getProductRes(productList);
     }
     // productResponseDTO 값 설정
     public static List<ProductDto.Response> getProductRes(List<Product> productList){
