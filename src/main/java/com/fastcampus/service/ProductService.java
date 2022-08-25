@@ -33,6 +33,23 @@ public class ProductService {
         }
         return productRepository.findAll();
     }
+    // productResponseDTO 값 설정
+    public static List<ProductDto.Response> getProductRes(List<Product> productList){
+        List<ProductDto.Response> productDtoList = new ArrayList<>();
+        for (int i = 0; i <productList.size() ; i++) {
+            Product product = productList.get(i);
+            ProductDto.Response productResDto =new ProductDto.Response(
+                    product.getId(),
+                    product.getProductName(),
+                    product.getProductContent(),
+                    product.getSupporterName(),
+                    product.getSupporterRegion(),
+                    product.getSupporterAmount()
+            );
+            productDtoList.add(productResDto);
+        }
+        return productDtoList;
+    }
 
     // 맞춤상품
     @Transactional
