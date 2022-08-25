@@ -30,7 +30,7 @@ public class MemberController {
             System.out.println(member);
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_USER, member), HttpStatus.OK);
         } else {
-            return new ResponseEntity(DefaultRes.res(StatusCode.CONFLICT, ResponseMessage.CREATED_FAIL, member.getEmail() + "은 이미 존재하는 이메일입니다."), HttpStatus.OK);
+            return new ResponseEntity(DefaultRes.res(StatusCode.CONFLICT, ResponseMessage.CREATED_FAIL, findMember.getEmail() + "은 이미 존재하는 이메일입니다."), HttpStatus.OK);
         }
     }
 
