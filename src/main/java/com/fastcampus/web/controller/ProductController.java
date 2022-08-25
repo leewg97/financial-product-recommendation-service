@@ -28,10 +28,9 @@ public class ProductController {
     }
 
     // 상품 추천
-    @GetMapping("/recommend")
-    public String customProduct(Long id){
-        productService.customProduct(2L);
-        return "good";
+    @GetMapping("/recommend/{id}")
+    public @ResponseBody ResponseEntity customProduct(@PathVariable Long id) throws Exception {
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_CUSTOM_PRODUCT_LIST,productService.customProducts(id)), HttpStatus.OK);
     }
 
 

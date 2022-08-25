@@ -36,7 +36,7 @@ public class ProductService {
 
     // 맞춤상품
     @Transactional
-    public List<Product> customProducts(Long id) {
+    public List<Product> customProducts(Long id) throws Exception {
         Optional<Member> member = memberRepository.findById(id);
         if (member.isPresent()) {
             Member findMember = member.get();
@@ -46,8 +46,9 @@ public class ProductService {
             List<Product> productList = productRepository.findBySupporterAmountGreaterThanEqualAndSupporterRegion(amount, region);
             log.info(productList.toString());
             return productList;
+        }else{
+            throw new Exception("회원이 존재하지 않습니다.");
         }
-        return new ArrayList<>();
     }
 
     // 상품 조회
