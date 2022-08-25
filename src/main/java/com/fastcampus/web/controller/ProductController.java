@@ -5,13 +5,14 @@ import com.fastcampus.web.api.DefaultRes;
 import com.fastcampus.web.api.ResponseMessage;
 import com.fastcampus.web.api.StatusCode;
 import com.fastcampus.web.dto.ProductDto;
+import com.fastcampus.web.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class ProductController {
 
     // 상품 조회
     @GetMapping("/{id}")
-    public @ResponseBody ResponseEntity getProduct(@PathVariable long id) throws Exception {
+    public @ResponseBody ResponseEntity getProduct(@PathVariable Long id) throws Exception {
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT,productService.getProduct(id)), HttpStatus.OK);
     }
 
