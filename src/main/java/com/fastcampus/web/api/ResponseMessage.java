@@ -14,4 +14,5 @@ public class ResponseMessage {
     public static final String GET_PRODUCT_LIST = "상품목록 조회 성공";
     public static final String GET_PRODUCT = "상품조회 성공";
     public static final String GET_CUSTOM_PRODUCT_LIST = "맞춤상품 조회 성공";
+    public static final String GET_PRODUCT_SEARCH = "상품검색 성공";
 }
