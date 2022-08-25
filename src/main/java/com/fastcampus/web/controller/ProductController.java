@@ -20,7 +20,15 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/api")
+    // 상품 목록
+    @GetMapping("/list")
+    public @ResponseBody ResponseEntity productList(){
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT_LIST,productService.productList()), HttpStatus.OK);
+
+    }
+
+    // 상품 추천
+    @GetMapping("/recommend")
     public String customProduct(Long id){
         productService.customProduct(2L);
         return "good";
