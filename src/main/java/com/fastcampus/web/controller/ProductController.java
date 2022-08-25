@@ -35,7 +35,12 @@ public class ProductController {
 
 
     // 상품 검색
-
+    @GetMapping("/search")
+    public @ResponseBody ResponseEntity searchProduct(@RequestParam String query,ProductDto productDto)  {
+        productDto.setSearchCondition(SearchCondition.TITLE);
+        productDto.setSearchKeyword(query);
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT_SEARCH,productService.SearchProducts(productDto)), HttpStatus.OK);
+    }
 
     // 상품 조회
     @GetMapping("/{id}")
