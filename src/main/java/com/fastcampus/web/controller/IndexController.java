@@ -32,7 +32,7 @@ public class IndexController {
         model.addAttribute("condition", productDto.getSearchCondition());
         model.addAttribute("keyword", productDto.getSearchKeyword());
 
-        List<Product> searchResult = productService.productList(productDto);
+        List<Product> searchResult = productService.SearchProducts(productDto);
 
         model.addAttribute("searchResult", searchResult);
         return "redirect:/";
