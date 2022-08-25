@@ -4,6 +4,8 @@ import com.fastcampus.domain.Member;
 import com.fastcampus.domain.Product;
 import com.fastcampus.persistence.MemberRepository;
 import com.fastcampus.persistence.ProductRepository;
+import com.fastcampus.web.dto.ProductDto;
+import com.fastcampus.web.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class ProductService {
 
     // 상품 검색
     @Transactional
-    public List<Product> productList(ProductDto productDto) {
+    public List<Product> SearchProducts(ProductDto productDto) {
         if (productDto.getSearchCondition().equals(SearchCondition.TITLE)) {
             return productRepository.findByProductNameContaining(productDto.getSearchKeyword());
         } else if (productDto.getSearchCondition().equals(SearchCondition.CONTENT)) {
@@ -34,7 +36,7 @@ public class ProductService {
 
     // 맞춤상품
     @Transactional
-    public List<Product> customProduct(Long id) {
+    public List<Product> customProducts(Long id) {
         Optional<Member> member = memberRepository.findById(id);
         if (member.isPresent()) {
             Member findMember = member.get();
@@ -42,23 +44,22 @@ public class ProductService {
             String region = findMember.getRegion();
 
             List<Product> productList = productRepository.findBySupporterAmountGreaterThanEqualAndSupporterRegion(amount, region);
-            System.out.println(productList);
             log.info(productList.toString());
             return productList;
         }
         return new ArrayList<>();
     }
 
-//    // 상품 조회
-//    @Transactional
-//    public Product getProduct(long id) {
-//        return productRepository.findById(id).get();
-//    }
-//
-//    // 상품 목록
-//    @Transactional
-//    public Page<Product> getPostList(Pageable pageable) {
-//        return productRepository.findAll(pageable);
-//    }
+    // 상품 조회
+    @Transactional
+    public Product getProduct(long id) {
+        return productRepository.findById(id).get();
+    }
+
+    // 상품 목록
+    @Transactional
+    public List<Product> productList() {
+        return productRepository.findAll();
+    }
 
 }
