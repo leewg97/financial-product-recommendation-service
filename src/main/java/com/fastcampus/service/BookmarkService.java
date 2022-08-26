@@ -1,9 +1,9 @@
 package com.fastcampus.service;
 
-import com.fastcampus.domain.Cart;
+import com.fastcampus.domain.Bookmark;
 import com.fastcampus.domain.Member;
 import com.fastcampus.domain.Product;
-import com.fastcampus.persistence.CartRepository;
+import com.fastcampus.persistence.BookmarkRepository;
 import com.fastcampus.persistence.MemberRepository;
 import com.fastcampus.persistence.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,44 +15,38 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CartService {
+public class BookmarkService {
 
-    private final CartRepository cartRepository;
+    private final BookmarkRepository bookmarkRepository;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
-    // 장바구니 등록
+    // 찜 등록
     @Transactional
-    public Cart addCart(Long memberId, Long productId) {
-        Cart cart = new Cart();
+    public Bookmark addBookmark(Long memberId, Long productId) {
+        Bookmark bookmark = new Bookmark();
 
         Member member = memberRepository.findById(memberId).orElseThrow();
         Product product = productRepository.findById(productId).orElseThrow();
 
-        cart.addCart(member, product);
-        return cartRepository.save(cart);
+        bookmark.addBookmark(member, product);
+        return bookmarkRepository.save(bookmark);
     }
 
-    // 장바구니 조회
+    // 찜 조회
     @Transactional(readOnly = true)
-    public List<Cart> findCarts(Long memberId) {
+    public List<Bookmark> findBookmarks(Long memberId) {
         Optional<Member> findMember = memberRepository.findById(memberId);
         if (findMember.isPresent()) {
-            return cartRepository.findByMember(findMember.get());
+            return bookmarkRepository.findByMember(findMember.get());
         }
         throw new RuntimeException();
     }
 
-    // 장바구니 삭제
+    // 찜 삭제
     @Transactional
-    public void deleteCart(Long cartId) {
-        cartRepository.deleteById(cartId);
+    public void deleteBookmark(Long bookmarkId) {
+        bookmarkRepository.deleteById(bookmarkId);
     }
 
-    // 장바구니 신청
-//    @Transactional
-//    public void askCart(Member member) {
-//        Cart cart = (Cart) cartRepository.findAllByMember(member);
-//        cartRepository.save(cart);
-//    }
 }
