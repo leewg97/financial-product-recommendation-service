@@ -54,6 +54,12 @@
 			<version>3.0.0</version>
 		</dependency>
 
+		<!-- MySQL Connector -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
 		<!-- security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
