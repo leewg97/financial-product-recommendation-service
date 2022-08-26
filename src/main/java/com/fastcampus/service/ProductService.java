@@ -53,36 +53,18 @@ public class ProductService {
         List<Product> productList = productRepository.findAll();
         return getProductResList(productList);
     }
-    // productResponseDTO 값 설정
-    public static List<ProductDto.Response> getProductResList(List<Product> productList){
-        List<ProductDto.Response> productDtoList = new ArrayList<>();
-        for (int i = 0; i <productList.size() ; i++) {
-            Product product = productList.get(i);
-            ProductDto.Response productResDto =new ProductDto.Response(
-                    product.getId(),
-                    product.getProductName(),
-                    product.getProductContent(),
-                    product.getSupporterName(),
-                    product.getSupporterRegion(),
-                    product.getSupporterAmount()
-            );
-            productDtoList.add(productResDto);
-        }
-        return productDtoList;
-    }
 
     // 맞춤상품
     @Transactional
-    public List<Product> customProducts(Long id) throws Exception {
+    public List<ProductDto.Response> customProducts(Long id) throws Exception {
         Optional<Member> member = memberRepository.findById(id);
         if (member.isPresent()) {
             Member findMember = member.get();
             int amount = findMember.getHopeAmount();
             String region = findMember.getRegion();
-
             List<Product> productList = productRepository.findBySupporterAmountGreaterThanEqualAndSupporterRegion(amount, region);
             log.info(productList.toString());
-            return productList;
+            return getProductResList(productList);
         }else{
             throw new Exception("회원이 존재하지 않습니다.");
         }
@@ -90,20 +72,28 @@ public class ProductService {
 
     // 상품 조회
     @Transactional
-    public Product getProduct(Long id) throws Exception {
+    public ProductDto.Response getProduct(Long id) throws Exception {
         Optional<Product> findProduct =  productRepository.findById(id);
         if(findProduct.isPresent()){
-            return findProduct.get();
+            Product product = findProduct.get();
+            ProductDto.Response productDto = new ProductDto.Response(
+                    product.getProductName(),
+                    product.getProductContent(),
+                    product.getSupporterName(),
+                    product.getSupporterRegion(),
+                    product.getSupporterAmount()
+            );
+            return productDto;
         }else{
             throw new Exception("해당상품은 존재하지 않습니다.");
         }
-
     }
 
     // 상품 목록
     @Transactional
-    public List<Product> productList() {
-        return productRepository.findAll();
+    public List<ProductDto.Response> productList() {
+        List<Product> productList =productRepository.findAll();
+        return getProductResList(productList);
     }
 
 }
