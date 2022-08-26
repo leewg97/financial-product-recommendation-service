@@ -28,6 +28,8 @@ public class ProductDto {
     @AllArgsConstructor
     public static class Response {
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
+        private Long id;
+        @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
         private String productName; // 상품 이름
         @ApiModelProperty(value = "상품 내용", example = "경기침체, 재해피해 소상공인 지원")
         private String productContent; //

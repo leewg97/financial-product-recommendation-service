@@ -29,6 +29,7 @@ public class ProductService {
         for (int i = 0; i <productList.size() ; i++) {
             Product product = productList.get(i);
             ProductDto.Response productResDto =new ProductDto.Response(
+                    product.getId(),
                     product.getProductName(),
                     product.getProductContent(),
                     product.getSupporterName(),
@@ -77,6 +78,7 @@ public class ProductService {
         if(findProduct.isPresent()){
             Product product = findProduct.get();
             ProductDto.Response productDto = new ProductDto.Response(
+                    product.getId(),
                     product.getProductName(),
                     product.getProductContent(),
                     product.getSupporterName(),
