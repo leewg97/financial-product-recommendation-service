@@ -26,7 +26,4 @@ public class Product {
 
     private int supporterAmount; // 지원 금액
 
-    @OneToMany(mappedBy = "product")
-    private List<Cart> carts = new ArrayList<>();
-
 }
