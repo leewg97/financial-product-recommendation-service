@@ -23,6 +23,23 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
+    // productResponseDTO 값 설정
+    public static List<ProductDto.Response> getProductResList(List<Product> productList){
+        List<ProductDto.Response> productDtoList = new ArrayList<>();
+        for (int i = 0; i <productList.size() ; i++) {
+            Product product = productList.get(i);
+            ProductDto.Response productResDto =new ProductDto.Response(
+                    product.getProductName(),
+                    product.getProductContent(),
+                    product.getSupporterName(),
+                    product.getSupporterRegion(),
+                    product.getSupporterAmount()
+            );
+            productDtoList.add(productResDto);
+        }
+        return productDtoList;
+    }
+
     // 상품 검색
     @Transactional
     public List<ProductDto.Response> SearchProducts(ProductDto.Request productDto) {
