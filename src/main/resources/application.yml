@@ -1,6 +1,9 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
-# datasource setting
+  # datasource setting
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:tcp://localhost/~/test
@@ -14,9 +17,10 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      ddl-auto: create
+      ddl-auto: update
       use-new-id-generator-mappings: false
     properties:
       hibernate:
         format_sql: true
+        default_batch_fetch_size: 1000
     defer-datasource-initialization: true
