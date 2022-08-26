@@ -2,6 +2,7 @@ package com.fastcampus.Security.auth;
 
 
 import com.fastcampus.domain.Member;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +12,7 @@ import java.util.Collection;
 // 로그인 진행이 완료가 되면 시큐리티 session을 만들어 준다.
 // Security Session => Authentication => UserDetails(PrincipalDetails)
 
+@Data
 public class PrincipalDetails implements UserDetails {
 
     private Member member;
