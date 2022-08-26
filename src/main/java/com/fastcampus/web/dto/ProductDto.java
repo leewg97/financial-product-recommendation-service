@@ -2,6 +2,7 @@ package com.fastcampus.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
@@ -19,7 +20,8 @@ public class ProductDto {
         private SearchCondition searchCondition;
         private String searchKeyword;
     }
-    @Data
+
+    @Getter
     @AllArgsConstructor
     public static class Response {
         private Long id;
