@@ -28,16 +28,16 @@ public class ProductService {
     public List<ProductDto.Response> SearchProducts(ProductDto.Request productDto) {
         if (productDto.getSearchCondition().equals(SearchCondition.TITLE)) {
             List<Product> productList = productRepository.findByProductNameContaining(productDto.getSearchKeyword());
-            return getProductRes(productList);
+            return getProductResList(productList);
         } else if (productDto.getSearchCondition().equals(SearchCondition.CONTENT)) {
             List<Product> productList = productRepository.findByProductContentContaining(productDto.getSearchKeyword());
-            return getProductRes(productList);
+            return getProductResList(productList);
         }
         List<Product> productList = productRepository.findAll();
-        return getProductRes(productList);
+        return getProductResList(productList);
     }
     // productResponseDTO 값 설정
-    public static List<ProductDto.Response> getProductRes(List<Product> productList){
+    public static List<ProductDto.Response> getProductResList(List<Product> productList){
         List<ProductDto.Response> productDtoList = new ArrayList<>();
         for (int i = 0; i <productList.size() ; i++) {
             Product product = productList.get(i);
