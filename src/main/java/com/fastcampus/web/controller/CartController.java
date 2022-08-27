@@ -1,5 +1,6 @@
 package com.fastcampus.web.controller;
 
+import com.fastcampus.Security.auth.PrincipalDetails;
 import com.fastcampus.domain.Cart;
 import com.fastcampus.service.CartService;
 import com.fastcampus.web.api.DefaultRes;
@@ -8,6 +9,7 @@ import com.fastcampus.web.api.StatusCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +42,10 @@ public class CartController {
 //    }
 
     // 장바구니 조회
-    @GetMapping("/{memberId}")
-    public @ResponseBody ResponseEntity getCart(@PathVariable Long memberId) {
+    @GetMapping("/find")
+    public @ResponseBody ResponseEntity getCart(Authentication authentication) {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        long memberId = principal.getMember().getId();
         List<Cart> findCart = cartService.findCarts(memberId);
 
         if (!findCart.isEmpty()) {

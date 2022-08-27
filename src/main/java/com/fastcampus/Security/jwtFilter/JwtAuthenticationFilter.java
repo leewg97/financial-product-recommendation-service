@@ -3,7 +3,7 @@ package com.fastcampus.Security.jwtFilter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fastcampus.Security.auth.PrincipalDetails;
-import com.fastcampus.domain.Member;
+import com.fastcampus.web.dto.LoginDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,50 +24,64 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
 
-    // login 요청을 하면 로그인 실행을 위해 실행되는 함수
+    // Authentication 객체 만들어서 리턴 => 의존 : AuthenticationManager
+    // 인증 요청시에 실행되는 함수 => /login
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("JwtAuthenticationFilter: 로그인 시도중");
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException {
 
+        System.out.println("JwtAuthenticationFilter : 진입");
+
+        // request에 있는 username과 password를 파싱해서 자바 Object로 받기
+        ObjectMapper om = new ObjectMapper();
+        LoginDto.Request loginRequestDto = null;
         try {
-            ObjectMapper om = new ObjectMapper();
-            Member member = om.readValue(request.getInputStream(), Member.class);
-
-            // 유저네임패스워드 토큰 생성
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(member.getEmail(), member.getPassword());
-
-            // PrincipalDetailsService의 loadUserByUsername() 함수가 실행된 후 정상이면 authentication이 리턴 됨
-            // DB에 있는 email과 password가 일치한다.
-            Authentication authentication =
-                    authenticationManager.authenticate(authenticationToken);
-
-            PrincipalDetails principalDetailis = (PrincipalDetails) authentication.getPrincipal();
-            System.out.println("Authentication : " + principalDetailis.getMember().getEmail());
-            // authentication 객체가 session 영역에 저장됨
-            return authentication;
-
+            loginRequestDto = om.readValue(request.getInputStream(), LoginDto.Request.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        System.out.println("JwtAuthenticationFilter : "+loginRequestDto);
+
+        // 유저네임패스워드 토큰 생성
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                        loginRequestDto.getEmail(),
+                        loginRequestDto.getPassword());
+
+        System.out.println("JwtAuthenticationFilter : 토큰생성완료");
+
+        // authenticate() 함수가 호출 되면 인증 프로바이더가 유저 디테일 서비스의
+        // loadUserByUsername(토큰의 첫번째 파라메터) 를 호출하고
+        // UserDetails를 리턴받아서 토큰의 두번째 파라메터(credential)과
+        // UserDetails(DB값)의 getPassword()함수로 비교해서 동일하면
+        // Authentication 객체를 만들어서 필터체인으로 리턴해준다.
+
+        // Tip: 인증 프로바이더의 디폴트 서비스는 UserDetailsService 타입
+        // Tip: 인증 프로바이더의 디폴트 암호화 방식은 BCryptPasswordEncoder
+        // 결론은 인증 프로바이더에게 알려줄 필요가 없음.
+        Authentication authentication =
+                authenticationManager.authenticate(authenticationToken);
+
+        PrincipalDetails principalDetailis = (PrincipalDetails) authentication.getPrincipal();
+        System.out.println("Authentication : "+principalDetailis.getMember().getEmail());
+        return authentication;
     }
 
-    // attemptAuthentication 실행 후 인증이 정상적으로 됐으면 successfulAuthentication 함수가 실행
-    // successfulAuthentication 함수에서 JWT Token 생성해서 response에 담아주기
+    // JWT Token 생성해서 response에 담아주기
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
 
         PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
 
         String jwtToken = JWT.create()
                 .withSubject(principalDetailis.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
                 .withClaim("id", principalDetailis.getMember().getId())
-                .withClaim("username", principalDetailis.getMember().getUsername())
-                .sign(Algorithm.HMAC512("Sleepy"));
+                .withClaim("email", principalDetailis.getMember().getEmail())
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
-        response.addHeader("Authentication", "Bearer "+jwtToken);
+        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
     }
 }
