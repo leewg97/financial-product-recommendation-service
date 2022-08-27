@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,9 +27,9 @@ public class MemberService {
     // 회원 검색
     @Transactional
     public Member getMember(String email) {
-        Optional<Member> findUser = memberRepository.findByEmail(email);
-        if(findUser.isPresent()) {
-            return findUser.get();
+        Member findUser = memberRepository.findByEmail(email);
+        if(findUser != null) {
+            return findUser;
         }
         return new Member();
     }
