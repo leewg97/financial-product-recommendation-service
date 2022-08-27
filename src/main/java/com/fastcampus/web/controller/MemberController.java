@@ -21,7 +21,7 @@ public class MemberController {
     private final MemberService memberService;
 
     // 회원가입 처리
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public @ResponseBody ResponseEntity insertUser(@RequestBody Member member) {
         Member findMember = memberService.getMember(member.getEmail());
 
