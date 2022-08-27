@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,6 +23,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final MemberRepository memberRepository;
 
     private final CorsFilter corsFilter;
+
+    // 스웨거 관련 설정
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/css/**, /static/js/**, *.ico");
+
+        // swagger
+        web.ignoring().antMatchers(
+                "/v3/api-docs",  "/configuration/ui",
+                "/swagger-resources", "/configuration/security",
+                "/swagger-ui.html", "/webjars/**","/swagger/**");
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilter(new JwtAuthenticationFilter(authenticationManager()));
         http.addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository));
         // 다음 경로에 대한 요청은 인증 없이 접근을 허용하도록 설정한다.
-        http.authorizeRequests().antMatchers("/", "/auth/**", "/home/**", "/js/**", "/image/**").permitAll();
+        http.authorizeRequests().antMatchers("/", "/auth/**", "/home/**", "/js/**", "/image/**","/swagger-resources/**","/swagger-ui/**").permitAll();
         // 위에서 언급한 경로 외에는 모두 인증을 거치도록 설정한다.
         http.authorizeRequests().anyRequest().authenticated();
 //        // 모든 경로 인증 없이 허용
