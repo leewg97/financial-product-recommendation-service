@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,28 +26,28 @@ public class ProductController {
 
     // 상품 목록
     @GetMapping("/list")
-    public @ResponseBody ResponseEntity productList(Long memberId){
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT_LIST,productService.productList(memberId)), HttpStatus.OK);
+    public @ResponseBody ResponseEntity productList(Authentication authentication){
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT_LIST,productService.productList(authentication)), HttpStatus.OK);
 
     }
 
     // 상품 추천
-    @GetMapping("/recommend/{id}")
-    public @ResponseBody ResponseEntity customProduct(@ApiParam(value = "회원의아이디") @PathVariable Long productId,Long memberId) throws Exception {
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_CUSTOM_PRODUCT_LIST,productService.customProducts(productId,memberId)), HttpStatus.OK);
+    @GetMapping("/recommend/{productId}")
+    public @ResponseBody ResponseEntity customProduct(@ApiParam(value = "회원의아이디") @PathVariable Long productId,Authentication authentication) throws Exception {
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_CUSTOM_PRODUCT_LIST,productService.customProducts(productId,authentication)), HttpStatus.OK);
     }
 
 
     // 상품 검색
     @GetMapping("/search")
-    public @ResponseBody ResponseEntity searchProduct(ProductDto.Request productDto,Long memberId)  {
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT_SEARCH,productService.SearchProducts(productDto,memberId)), HttpStatus.OK);
+    public @ResponseBody ResponseEntity searchProduct(ProductDto.Request productDto,Authentication authentication)  {
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT_SEARCH,productService.SearchProducts(productDto,authentication)), HttpStatus.OK);
     }
 
     // 상품 조회
-    @GetMapping("/{id}")
-    public @ResponseBody ResponseEntity getProduct(@ApiParam(value = "상품의 index") @PathVariable Long ProductId,Long memberId) throws Exception {
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT,productService.getProduct(ProductId,memberId)), HttpStatus.OK);
+    @GetMapping("/{productId}")
+    public @ResponseBody ResponseEntity getProduct(@ApiParam(value = "상품의 index") @PathVariable Long productId,Authentication authentication) throws Exception {
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT,productService.getProduct(productId,authentication)), HttpStatus.OK);
     }
 
 }
