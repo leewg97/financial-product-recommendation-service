@@ -83,8 +83,10 @@ public class ProductService {
 
     // 맞춤상품
     @Transactional
-    public List<ProductDto.Response> customProducts(Long productId,Authentication authentication) throws Exception {
-        Optional<Member> member = memberRepository.findById(productId);
+    public List<ProductDto.Response> customProducts(Authentication authentication) throws Exception {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        long memberId = principal.getMember().getId();
+        Optional<Member> member = memberRepository.findById(memberId);
         if (member.isPresent()) {
             Member findMember = member.get();
             int amount = findMember.getHopeAmount();
