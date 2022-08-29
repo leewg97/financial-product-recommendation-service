@@ -26,14 +26,16 @@ public class MemberService {
     public Member insertUser(Member member) {
         member.setJob("소상공인");
         member.setPassword(passwordEncoder.encode(member.getPassword()));
-        Member registerMember = memberRepository.save(member);
+
+        memberRepository.save(member);
+
         // 회원가입과 동시에 장바구니 생성
         Cart cart = cartRepository.findByMemberId(member.getId());
-        if (cart == null) { 
+        if (cart == null) {
             cart = Cart.addCart(member);
             cartRepository.save(cart);
         }
-        return registerMember;
+        return member;
     }
 
     // 회원가입 전 db에 같은 이름이 존재하는지 검색
