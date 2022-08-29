@@ -8,6 +8,7 @@ import com.fastcampus.web.api.StatusCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,9 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     // Bookmark 등록
-    @PostMapping("/{memberId}/{productId}")
-    public @ResponseBody ResponseEntity insertBookmark(@PathVariable Long productId, @PathVariable Long memberId) {
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ADD_BOOKMARK, bookmarkService.addBookmark(memberId, productId)), HttpStatus.OK);
+    @PostMapping("/{productId}")
+    public @ResponseBody ResponseEntity insertBookmark(@PathVariable Long productId,  Authentication authentication) throws Exception {
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ADD_BOOKMARK, bookmarkService.addBookmark(productId,authentication)), HttpStatus.OK);
     }
 
     // Bookmark 조회
