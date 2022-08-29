@@ -7,10 +7,15 @@ import com.fastcampus.domain.Product;
 import com.fastcampus.persistence.BookmarkRepository;
 import com.fastcampus.persistence.MemberRepository;
 import com.fastcampus.persistence.ProductRepository;
+import com.fastcampus.web.api.DefaultRes;
+import com.fastcampus.web.api.ResponseMessage;
+import com.fastcampus.web.api.StatusCode;
 import com.fastcampus.web.dto.ProductDto;
 import com.fastcampus.web.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
