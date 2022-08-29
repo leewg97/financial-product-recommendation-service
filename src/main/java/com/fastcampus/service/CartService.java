@@ -52,15 +52,15 @@ public class CartService {
 
     // 장바구니 리스트 조회
     @Transactional(readOnly = true)
-    public List<ProductDto.Response> findCarts(Long id) {
+    public List<ProductDto.CartResponse> findCarts(Long id) {
         Member findMember = memberRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
         List<CartProduct> findCartProducts = cartProductRepository.findAllByCart(findMember.getCart());
-        List<ProductDto.Response> productList = new ArrayList<>();
+        List<ProductDto.CartResponse> productList = new ArrayList<>();
 
         for (int i = 0; i <findCartProducts.size() ; i++) {
             Product product = findCartProducts.get(i).getProduct();
-            ProductDto.Response productResDto =new ProductDto.Response(
+            ProductDto.CartResponse productResDto =new ProductDto.CartResponse(
                     product.getId(),
                     product.getProductName(),
                     product.getProductContent(),
@@ -78,6 +78,5 @@ public class CartService {
     public void deleteCartProduct(Long id) {
         cartProductRepository.deleteById(id);
     }
-
 
 }
