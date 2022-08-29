@@ -1,58 +1,83 @@
 package com.fastcampus.service;
 
 import com.fastcampus.domain.Cart;
+import com.fastcampus.domain.CartProduct;
 import com.fastcampus.domain.Member;
 import com.fastcampus.domain.Product;
+import com.fastcampus.persistence.CartProductRepository;
 import com.fastcampus.persistence.CartRepository;
 import com.fastcampus.persistence.MemberRepository;
 import com.fastcampus.persistence.ProductRepository;
+import com.fastcampus.web.dto.CartProductDto;
+import com.fastcampus.web.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CartService {
 
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
+    private final CartProductRepository cartProductRepository;
 
     // 장바구니 등록
-    @Transactional
-    public Cart addCart(Long memberId, Long productId) {
-        Cart cart = new Cart();
+    public ProductDto.Response addCart(CartProductDto.Request request, Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
+        Product product = productRepository.findById(request.getProductId()).orElseThrow(
+                () -> new EntityNotFoundException("해당 상품이 존재하지 않습니다."));
 
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        Product product = productRepository.findById(productId).orElseThrow();
+        Cart cart = cartRepository.findByMemberId(member.getId());
+        CartProduct cartProduct = request.toEntity(cart, product);
 
-        cart.addCart(member, product);
-        return cartRepository.save(cart);
+        // 상품이 장바구니에 들어가있는지 확인
+        CartProduct findCartProduct = cartProductRepository.findByCartIdAndProductId(cart.getId(), product.getId());
+        if (findCartProduct != null) {
+            throw new RuntimeException("해당 상품은 이미 장바구니에 등록되어 있습니다.");
+        }
+        CartProduct.addCartProduct(cart, product);
+        cartProductRepository.save(cartProduct);
+
+        return ProductDto.res(product);
     }
 
-    // 장바구니 조회
+
+    // 장바구니 리스트 조회
     @Transactional(readOnly = true)
-    public List<Cart> findCarts(Long memberId) {
-        Optional<Member> findMember = memberRepository.findById(memberId);
-        if (findMember.isPresent()) {
-            return cartRepository.findByMember(findMember.get());
+    public List<ProductDto.Response> findCarts(Long id) {
+        Member findMember = memberRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
+        List<CartProduct> findCartProducts = cartProductRepository.findAllByCart(findMember.getCart());
+        List<ProductDto.Response> productList = new ArrayList<>();
+
+        for (int i = 0; i <findCartProducts.size() ; i++) {
+            Product product = findCartProducts.get(i).getProduct();
+            ProductDto.Response productResDto =new ProductDto.Response(
+                    product.getId(),
+                    product.getProductName(),
+                    product.getProductContent(),
+                    product.getSupporterName(),
+                    product.getSupporterRegion(),
+                    product.getSupporterAmount()
+            );
+            productList.add(productResDto);
         }
-        throw new RuntimeException();
+        return productList;
     }
 
     // 장바구니 삭제
     @Transactional
-    public void deleteCart(Long cartId) {
-        cartRepository.deleteById(cartId);
+    public void deleteCartProduct(Long id) {
+        cartProductRepository.deleteById(id);
     }
 
-    // 장바구니 신청
-//    @Transactional
-//    public void askCart(Member member) {
-//        Cart cart = (Cart) cartRepository.findAllByMember(member);
-//        cartRepository.save(cart);
-//    }
+
 }
