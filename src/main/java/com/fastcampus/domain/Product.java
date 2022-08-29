@@ -1,5 +1,7 @@
 package com.fastcampus.domain;
 
+import com.fastcampus.web.dto.ProductDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Product {
 
     @Id
@@ -25,5 +28,8 @@ public class Product {
     private String supporterRegion; // 지원 지역
 
     private int supporterAmount; // 지원 금액
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<CartProduct> cartProducts = new ArrayList<>();
 
 }
