@@ -79,4 +79,11 @@ public class CartService {
         cartProductRepository.deleteById(id);
     }
 
+    // 장바구니 신청
+    @Transactional
+    public void deleteAll(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당하는 회원이 존재하지 않습니다."));
+        cartProductRepository.deleteAllInBatch(member.getCart().getCartProducts());
+    }
+
 }
