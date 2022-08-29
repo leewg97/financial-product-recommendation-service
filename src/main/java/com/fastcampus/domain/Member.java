@@ -29,4 +29,7 @@ public class Member {
 
     private int hopeAmount; // 희망하는 지원 금액
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Cart cart;
+
 }

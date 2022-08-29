@@ -1,5 +1,6 @@
 package com.fastcampus.web.dto;
 
+import com.fastcampus.domain.Product;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -24,8 +25,10 @@ public class ProductDto {
     @Getter
     @Setter
     @AllArgsConstructor
+    @Builder
     @NoArgsConstructor
     public static class Response {
+
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
         private Long id;
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
@@ -40,5 +43,18 @@ public class ProductDto {
         private int supporterAmount; //
         @ApiModelProperty(value = "관심상품 여부",example = "true")
         private boolean bookmarkProduct;
+
     }
+
+    public static ProductDto.Response res(Product product) {
+        return ProductDto.Response.builder()
+                .id(product.getId())
+                .productName(product.getProductName())
+                .productContent(product.getProductContent())
+                .supporterName(product.getSupporterName())
+                .supporterRegion(product.getSupporterRegion())
+                .supporterAmount(product.getSupporterAmount())
+                .build();
+    }
+
 }
