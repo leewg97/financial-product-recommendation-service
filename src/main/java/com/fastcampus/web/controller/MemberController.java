@@ -7,6 +7,7 @@ import com.fastcampus.web.api.DefaultRes;
 import com.fastcampus.web.api.ResponseMessage;
 import com.fastcampus.web.api.StatusCode;
 import com.fastcampus.web.dto.MemberDto;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = {"회원 관련 Controller"})
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
