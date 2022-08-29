@@ -1,10 +1,8 @@
 package com.fastcampus.web.dto;
 
+import com.fastcampus.domain.Product;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,7 +24,9 @@ public class ProductDto {
 
     @Getter
     @AllArgsConstructor
+    @Builder
     public static class Response {
+
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
         private Long id;
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
@@ -39,5 +39,18 @@ public class ProductDto {
         private String supporterRegion; // 지원 지역
         @ApiModelProperty(value = "지원 금액", example = "3500000")
         private int supporterAmount; //
+
     }
+
+    public static ProductDto.Response res(Product product) {
+        return ProductDto.Response.builder()
+                .id(product.getId())
+                .productName(product.getProductName())
+                .productContent(product.getProductContent())
+                .supporterName(product.getSupporterName())
+                .supporterRegion(product.getSupporterRegion())
+                .supporterAmount(product.getSupporterAmount())
+                .build();
+    }
+
 }
