@@ -26,7 +26,6 @@ public class MemberService {
     public Member insertUser(Member member) {
         member.setJob("소상공인");
         member.setPassword(passwordEncoder.encode(member.getPassword()));
-        Member registerMember = memberRepository.save(member);
 
         memberRepository.save(member);
 
@@ -36,7 +35,7 @@ public class MemberService {
             cart = Cart.addCart(member);
             cartRepository.save(cart);
         }
-        return registerMember;
+        return member;
     }
 
     // 회원가입 전 db에 같은 이름이 존재하는지 검색
