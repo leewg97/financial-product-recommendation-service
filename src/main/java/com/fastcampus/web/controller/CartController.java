@@ -40,7 +40,7 @@ public class CartController {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         Long memberId = principal.getMember().getId();
 
-        List<ProductDto.Response> findCart = cartService.findCarts(memberId);
+        List<ProductDto.CartResponse> findCart = cartService.findCarts(memberId);
 
         if (!findCart.isEmpty()) {
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.READ_CART, cartService.findCarts(memberId)), HttpStatus.OK);
