@@ -1,32 +1,34 @@
 package com.fastcampus.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Cart {
 
     @Id
+    @Column(name="cart_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID") // FK
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // FK
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID") // FK
-    private Product product;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
+    private List<CartProduct> cartProducts = new ArrayList<>();
 
-    public void addCart(Member member, Product product) {
-        this.member = member;
-        this.product = product;
+    public static Cart addCart(Member member){
+        Cart cart = new Cart();
+        cart.setMember(member);
+        return cart;
     }
 
 }
