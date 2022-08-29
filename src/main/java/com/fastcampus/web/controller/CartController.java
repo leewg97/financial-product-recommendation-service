@@ -55,4 +55,12 @@ public class CartController {
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_CART, "장바구니 목록이 삭제 되었습니다."), HttpStatus.OK);
     }
 
+    // 장바구니 신청
+    @DeleteMapping("/order")
+    public @ResponseBody ResponseEntity deleteAll(Authentication authentication) {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        Long memberId = principal.getMember().getId();
+        cartService.deleteAll(memberId);
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ORDER_CART, "장바구니 신청이 완료되었습니다."), HttpStatus.OK);
+    }
 }
