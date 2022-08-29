@@ -52,31 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // 로그인 후 메인페이지로 이동
 //        http.formLogin().defaultSuccessUrl("/");
         // 로그아웃 path
-        http.logout().logoutUrl("/auth/logout").logoutSuccessUrl("/");
+        http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/");
 
     }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .addFilter(CorsConfig.corsFilter())
-//                .csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .formLogin().disable()
-//                .httpBasic().disable()
-//
-//                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-//                .addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository))
-//                .authorizeRequests()
-//                .antMatchers("/api/v1/user/**")
-//                .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-//                .antMatchers("/api/v1/manager/**")
-//                .access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-//                .antMatchers("/api/v1/admin/**")
-//                .access("hasRole('ROLE_ADMIN')")
-//                .anyRequest().permitAll();
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
