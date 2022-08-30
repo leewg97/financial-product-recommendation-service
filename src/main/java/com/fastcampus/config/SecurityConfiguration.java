@@ -1,4 +1,4 @@
-package com.fastcampus.Security;
+package com.fastcampus.config;
 
 import com.fastcampus.Security.jwtFilter.JwtAuthenticationFilter;
 import com.fastcampus.Security.jwtFilter.JwtAuthorizationFilter;
@@ -25,6 +25,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final CorsFilter corsFilter;
 
     // 스웨거 관련 설정
+
+    private static final String[] AUTH_ARR = {
+            "/swagger/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**"
+    };
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/static/css/**, /static/js/**, *.ico");
@@ -33,8 +39,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 "/v3/api-docs",  "/configuration/ui",
                 "/swagger-resources", "/configuration/security",
-                "/swagger-ui.html", "/webjars/**","/swagger/**");
+                "/swagger-ui.html", "/webjars/**","/swagger/**", "/v2/api-docs");
+        web.ignoring()
+                .antMatchers(AUTH_ARR);
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
