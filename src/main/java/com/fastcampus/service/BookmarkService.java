@@ -23,6 +23,8 @@ public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
+    private final ProductService productService;
+
 
     // 찜 등록
     public ProductDto.Response addBookmark(BookmarkProductDto.Request request, Long id) {
@@ -79,9 +81,24 @@ public class BookmarkService {
         return bookmarkList;
     }
 
-    // 장바구니 삭제
+    // 찜 삭제 (해당하는 제품 하나)
     @Transactional
-    public void deleteBookmark(Long id) {
+    public ProductDto.Response deleteBookmark(Long id) {
+        BookmarkProduct bookmarkProduct = bookmarkProductRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(bookmarkProduct.getProduct().getId()).orElseThrow();
+        Bookmark bookmark = bookmarkRepository.findById(bookmarkProduct.getBookmark().getId()).orElseThrow();
+
         bookmarkProductRepository.deleteById(id);
+
+        ProductDto.Response productDto = new ProductDto.Response(
+                product.getId(),
+                product.getProductName(),
+                product.getProductContent(),
+                product.getSupporterName(),
+                product.getSupporterRegion(),
+                product.getSupporterAmount(),
+                productService.isBookmark(bookmark.getMember().getId(),product.getId())
+        );
+        return productDto;
     }
 }
