@@ -32,4 +32,7 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
     private Cart cart;
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Bookmark bookmark;
+
 }
