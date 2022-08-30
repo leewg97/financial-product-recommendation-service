@@ -1,8 +1,10 @@
 package com.fastcampus.service;
 
+import com.fastcampus.domain.Bookmark;
 import com.fastcampus.domain.Cart;
 import com.fastcampus.domain.CartProduct;
 import com.fastcampus.domain.Member;
+import com.fastcampus.persistence.BookmarkRepository;
 import com.fastcampus.persistence.CartRepository;
 import com.fastcampus.persistence.MemberRepository;
 import com.fastcampus.web.dto.MemberDto;
@@ -20,6 +22,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     // 회원 등록
     @Transactional
@@ -35,6 +38,14 @@ public class MemberService {
             cart = Cart.addCart(member);
             cartRepository.save(cart);
         }
+
+        // 회원가입과 동시에 북마크 생성
+        Bookmark bookmark = bookmarkRepository.findByMemberId(member.getId());
+        if (bookmark == null) {
+            bookmark = Bookmark.addBookmark(member);
+            bookmarkRepository.save(bookmark);
+        }
+
         return member;
     }
 
