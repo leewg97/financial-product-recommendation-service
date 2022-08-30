@@ -34,18 +34,22 @@ public class ProductService {
     // 찜여부
     public boolean isBookmark(Long memberId, Long productId){
         Member member = memberRepository.findById(memberId).orElseThrow();
+        // 회원에 해당하는 찜한 북마크
         Bookmark bookmark = bookmarkRepository.findByMember(member);
-        List<BookmarkProduct> bookmarkProduct = bookmarkProductRepository.findAllByBookmark(bookmark);
-        for (int i = 0; i <bookmarkProduct.size() ; i++) {
-            // 찜한 제품 아이디 찾고
-            if(productId == bookmarkProduct.get(i).getProduct().getId()){
+        // 해당 북마크에서의 북마크아이디와 같은것들.
+        List<BookmarkProduct> bookmarkProducts = bookmarkProductRepository.findAllByBookmark(bookmark);
+
+        for (int i = 0; i <bookmarkProducts.size(); i++) {
+            if(productId == bookmarkProducts.get(i).getProduct().getId()){
                 return true;
             }else{
-                return false;
+                continue;
             }
         }
         return false;
     }
+
+
 
     // productResponseDTO 값 설정
     public List<ProductDto.Response> getProductResList(List<Product> productList, Authentication authentication){
