@@ -27,6 +27,7 @@ public class BookmarkService {
 
 
     // 찜 등록
+    @Transactional
     public ProductDto.Response addBookmark(BookmarkProductDto.Request request, Long id) {
         Member member = memberRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
