@@ -50,8 +50,7 @@ public class BookmarkController {
     // 찜 삭제
     @DeleteMapping("/{id}")
     public @ResponseBody ResponseEntity deleteCart(@PathVariable Long id) {
-        bookmarkService.deleteBookmark(id);
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_BOOKMARK, "찜 목록이 삭제 되었습니다."), HttpStatus.OK);
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_BOOKMARK, bookmarkService.deleteBookmark(id)), HttpStatus.OK);
     }
 
 }
