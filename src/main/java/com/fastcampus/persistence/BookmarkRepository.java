@@ -4,9 +4,13 @@ import com.fastcampus.domain.Bookmark;
 import com.fastcampus.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    List<Bookmark> findByMember(Member member);
+    Optional<Bookmark> findById(Long id);
+
+    Bookmark findByMemberId(Long memberId);
+
+    Bookmark findByMember(Member member);
 }
