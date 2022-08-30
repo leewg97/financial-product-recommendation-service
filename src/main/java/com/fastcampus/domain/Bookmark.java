@@ -3,31 +3,36 @@ package com.fastcampus.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Bookmark {
 
     @Id
+    @Column(name = "bookmark_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID") // FK
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // FK
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID") // FK
-    private Product product;
+    @OneToMany(mappedBy = "bookmark", cascade = CascadeType.REMOVE)
+    private List<BookmarkProduct> bookmarkProducts = new ArrayList<>();
 
-    public void addBookmark(Member member, Product product) {
-        this.member = member;
-        this.product = product;
+    public static Bookmark addBookmark(Member member) {
+        Bookmark bookmark = new Bookmark();
+        bookmark.setMember(member);
+        return bookmark;
     }
 
 }

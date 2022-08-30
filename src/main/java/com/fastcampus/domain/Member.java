@@ -1,12 +1,12 @@
 package com.fastcampus.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,5 +31,8 @@ public class Member {
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
     private Cart cart;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Bookmark bookmark;
 
 }

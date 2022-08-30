@@ -1,14 +1,13 @@
 package com.fastcampus.domain;
 
-import com.fastcampus.web.dto.ProductDto;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,5 +30,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<CartProduct> cartProducts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<BookmarkProduct> bookmarkProducts = new ArrayList<>();
 
 }

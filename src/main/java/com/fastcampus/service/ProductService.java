@@ -2,20 +2,17 @@ package com.fastcampus.service;
 
 import com.fastcampus.Security.auth.PrincipalDetails;
 import com.fastcampus.domain.Bookmark;
+import com.fastcampus.domain.BookmarkProduct;
 import com.fastcampus.domain.Member;
 import com.fastcampus.domain.Product;
+import com.fastcampus.persistence.BookmarkProductRepository;
 import com.fastcampus.persistence.BookmarkRepository;
 import com.fastcampus.persistence.MemberRepository;
 import com.fastcampus.persistence.ProductRepository;
-import com.fastcampus.web.api.DefaultRes;
-import com.fastcampus.web.api.ResponseMessage;
-import com.fastcampus.web.api.StatusCode;
 import com.fastcampus.web.dto.ProductDto;
 import com.fastcampus.web.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -31,23 +28,28 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
-
     private final BookmarkRepository bookmarkRepository;
+    private final BookmarkProductRepository bookmarkProductRepository;
 
     // 찜여부
     public boolean isBookmark(Long memberId, Long productId){
         Member member = memberRepository.findById(memberId).orElseThrow();
-        List<Bookmark> bookmark = bookmarkRepository.findByMember(member);
-        for (int i = 0; i <bookmark.size() ; i++) {
-            // 찜한 제품 아이디 찾고
-            if(productId == bookmark.get(i).getProduct().getId()){
+        // 회원에 해당하는 찜한 북마크
+        Bookmark bookmark = bookmarkRepository.findByMember(member);
+        // 해당 북마크에서의 북마크아이디와 같은것들.
+        List<BookmarkProduct> bookmarkProducts = bookmarkProductRepository.findAllByBookmark(bookmark);
+
+        for (int i = 0; i <bookmarkProducts.size(); i++) {
+            if(productId == bookmarkProducts.get(i).getProduct().getId()){
                 return true;
             }else{
-                return false;
+                continue;
             }
         }
         return false;
     }
+
+
 
     // productResponseDTO 값 설정
     public List<ProductDto.Response> getProductResList(List<Product> productList, Authentication authentication){
