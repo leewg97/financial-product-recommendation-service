@@ -43,7 +43,16 @@ public class BookmarkService {
         BookmarkProduct.addBookmarkProduct(bookmark, product);
         bookmarkProductRepository.save(bookmarkProduct);
 
-        return ProductDto.res(product);
+        ProductDto.Response productDto = new ProductDto.Response(
+                product.getId(),
+                product.getProductName(),
+                product.getProductContent(),
+                product.getSupporterName(),
+                product.getSupporterRegion(),
+                product.getSupporterAmount(),
+                productService.isBookmark(member.getId(),product.getId())
+        );
+        return productDto;
     }
 
 
