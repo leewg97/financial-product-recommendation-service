@@ -1,10 +1,13 @@
 package com.fastcampus.web.controller;
 
-import com.fastcampus.domain.Bookmark;
+import com.fastcampus.Security.auth.PrincipalDetails;
 import com.fastcampus.service.BookmarkService;
 import com.fastcampus.web.api.DefaultRes;
 import com.fastcampus.web.api.ResponseMessage;
 import com.fastcampus.web.api.StatusCode;
+import com.fastcampus.web.dto.BookmarkProductDto;
+import com.fastcampus.web.dto.ProductDto;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(tags = {"찜 목록 정보를 제공하는 Controller"})
 @Controller
 @RequestMapping("/bookmarks")
 @RequiredArgsConstructor
@@ -21,28 +25,32 @@ public class BookmarkController {
 
     private final BookmarkService bookmarkService;
 
-    // Bookmark 등록
-    @PostMapping("/{productId}")
-    public @ResponseBody ResponseEntity insertBookmark(@PathVariable Long productId,  Authentication authentication) throws Exception {
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ADD_BOOKMARK, bookmarkService.addBookmark(productId,authentication)), HttpStatus.OK);
+    // 찜 등록
+    @PostMapping("/add")
+    public @ResponseBody ResponseEntity addBookmark(@RequestBody BookmarkProductDto.Request cartProductDto, Authentication authentication) {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        Long memberId = principal.getMember().getId();
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ADD_BOOKMARK, bookmarkService.addBookmark(cartProductDto, memberId)), HttpStatus.OK);
     }
 
-    // Bookmark 조회
-    @GetMapping("/{memberId}")
-    public @ResponseBody ResponseEntity bookmarkList(@PathVariable Long memberId) {
-        List<Bookmark> findBookmark = bookmarkService.findBookmarks(memberId);
+    // 찜 목록 조회
+    @GetMapping("/find")
+    public @ResponseBody ResponseEntity getCart(Authentication authentication) {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        Long memberId = principal.getMember().getId();
 
-        if (!findBookmark.isEmpty()) {
+        List<ProductDto.CartResponse> findCart = bookmarkService.findBookmarks(memberId);
+
+        if (!findCart.isEmpty()) {
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.READ_BOOKMARK, bookmarkService.findBookmarks(memberId)), HttpStatus.OK);
         }
-        return new ResponseEntity(DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_BOOKMARK, "찜 목록이 존재하지 않습니다."), HttpStatus.OK);
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.NOT_FOUND_BOOKMARK, "찜 목록이 존재하지 않습니다."), HttpStatus.OK);
     }
 
-    // Bookmark 삭제
-    @DeleteMapping("/{bookmarkId}")
-    @ResponseBody
-    public ResponseEntity deleteBookmark(@PathVariable Long bookmarkId) {
-        bookmarkService.deleteBookmark(bookmarkId);
+    // 찜 삭제
+    @DeleteMapping("/{id}")
+    public @ResponseBody ResponseEntity deleteCart(@PathVariable Long id) {
+        bookmarkService.deleteBookmark(id);
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_BOOKMARK, "찜 목록이 삭제 되었습니다."), HttpStatus.OK);
     }
 
