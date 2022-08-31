@@ -1,25 +1,28 @@
+server:
+  port: 5000
+
 spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
 
   # datasource setting
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/test
+#    username: sa
+#    password:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password:
-# datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://miniproject-db.cjdwdguveoi5.ap-northeast-2.rds.amazonaws.com:3306/miniproject
-#    username: admin
-#    password: miniadmin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://miniproject-db.czvpzexrcqw0.ap-northeast-2.rds.amazonaws.com:3306/miniproject
+    username: admin
+    password: adminmini
 
   # JPA setting
   jpa:
     open-in-view: true
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
       naming:
