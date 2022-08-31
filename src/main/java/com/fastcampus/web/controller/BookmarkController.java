@@ -8,6 +8,7 @@ import com.fastcampus.web.api.StatusCode;
 import com.fastcampus.web.dto.BookmarkProductDto;
 import com.fastcampus.web.dto.ProductDto;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     // 찜 등록
+    @ApiOperation(value="찜 등록")
     @PostMapping("/add")
     public @ResponseBody ResponseEntity addBookmark(@RequestBody BookmarkProductDto.Request cartProductDto, Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -34,6 +36,7 @@ public class BookmarkController {
     }
 
     // 찜 목록 조회
+    @ApiOperation(value="찜 목록 조회")
     @GetMapping("/find")
     public @ResponseBody ResponseEntity getCart(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -48,6 +51,7 @@ public class BookmarkController {
     }
 
     // 찜 삭제
+    @ApiOperation(value="찜 삭제")
     @DeleteMapping("/{id}")
     public @ResponseBody ResponseEntity deleteCart(@PathVariable Long id) {
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_BOOKMARK, bookmarkService.deleteBookmark(id)), HttpStatus.OK);

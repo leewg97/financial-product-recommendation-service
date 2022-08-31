@@ -6,6 +6,7 @@ import com.fastcampus.web.api.ResponseMessage;
 import com.fastcampus.web.api.StatusCode;
 import com.fastcampus.web.dto.LoginDto;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class LoginController {
   private final LoginService loginService;
 
   // 로그인
+  @ApiOperation(value="로그인")
   @PostMapping("/login")
   public @ResponseBody ResponseEntity login (@RequestBody LoginDto.Request req) {
     LoginDto.Response response = loginService.login(req);

@@ -30,6 +30,7 @@ public class ProductController {
     }
 
     // 상품 추천
+    @ApiOperation(value="상품 추천")
     @GetMapping("/recommend")
     public @ResponseBody ResponseEntity customProduct(Authentication authentication) throws Exception {
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_CUSTOM_PRODUCT_LIST, productService.customProducts(authentication)), HttpStatus.OK);
@@ -37,12 +38,14 @@ public class ProductController {
 
 
     // 상품 검색
+    @ApiOperation(value="상품 검색")
     @GetMapping("/search")
     public @ResponseBody ResponseEntity searchProduct(ProductDto.Request productDto, Authentication authentication) {
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT_SEARCH, productService.SearchProducts(productDto, authentication)), HttpStatus.OK);
     }
 
     // 상품 조회
+    @ApiOperation(value="상품 조회")
     @GetMapping("/{productId}")
     public @ResponseBody ResponseEntity getProduct(@ApiParam(value = "상품의 index") @PathVariable Long productId, Authentication authentication) throws Exception {
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT, productService.getProduct(productId, authentication)), HttpStatus.OK);
