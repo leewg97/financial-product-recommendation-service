@@ -15,4 +15,11 @@ public class LoginDto {
         private String password;
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Response {
+        private String email;
+        private String Authorization;
+    }
 }
