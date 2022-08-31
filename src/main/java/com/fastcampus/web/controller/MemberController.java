@@ -40,12 +40,12 @@ public class MemberController {
     // 회원가입 처리
     @ApiOperation(value="회원 가입")
     @PostMapping("/auth/register")
-    public @ResponseBody ResponseEntity insertUser(@RequestBody Member member) {
-        Member findMember = memberService.getMember(member.getEmail());
+    public @ResponseBody ResponseEntity insertUser(@RequestBody MemberDto.Request req) {
+        Member findMember = memberService.getMember(req.getEmail());
 
         if(findMember.getEmail() == null) {
-            Member registerMember = memberService.insertUser(member);
-            MemberDto.Response resMember = memberService.resGetMember(registerMember.getEmail());
+            Member newMember = memberService.insertUser(req);
+            MemberDto.Response resMember = memberService.resGetMember(newMember.getEmail());
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_USER, resMember), HttpStatus.OK);
         } else {
             return new ResponseEntity(DefaultRes.res(StatusCode.CONFLICT, ResponseMessage.CREATED_FAIL, findMember.getEmail() + "은 이미 존재하는 이메일입니다."), HttpStatus.OK);
