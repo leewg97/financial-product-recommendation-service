@@ -4,7 +4,6 @@ import com.fastcampus.domain.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-
 @Data
 public class BookmarkProductDto {
 
@@ -37,6 +36,5 @@ public class BookmarkProductDto {
         private Long productId;
 
     }
-    
-    
+
 }

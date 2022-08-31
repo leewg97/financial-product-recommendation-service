@@ -30,4 +30,5 @@ public class DefaultRes<T> {
                 .responseMessage(responseMessage)
                 .build();
     }
+
 }

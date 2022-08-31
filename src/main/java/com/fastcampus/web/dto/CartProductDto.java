@@ -6,7 +6,6 @@ import com.fastcampus.domain.Product;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-
 @Data
 public class CartProductDto {
 
@@ -39,6 +38,5 @@ public class CartProductDto {
         private Long productId;
 
     }
-    
     
 }

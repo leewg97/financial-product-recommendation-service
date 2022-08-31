@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-
 @Api(tags = {"상품 정보를 제공하는 Controller"})
 @RestController
 @RequiredArgsConstructor
@@ -50,4 +49,5 @@ public class ProductController {
     public @ResponseBody ResponseEntity getProduct(@ApiParam(value = "상품의 index") @PathVariable Long productId, Authentication authentication) throws Exception {
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.GET_PRODUCT, productService.getProduct(productId, authentication)), HttpStatus.OK);
     }
+
 }
