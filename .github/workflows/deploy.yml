@@ -32,7 +32,7 @@ jobs:
 
       - name: Generate deployment package
         run: |
-          mkdir -p deploy
+          mkdir deploy
           cp build/libs/*.jar deploy/application.jar
           cp Procfile deploy/Procfile
           cp -r .ebextensions deploy/.ebextensions
@@ -44,8 +44,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: freelec-springboot2-webervice
-          environment_name: freelec-springboot2-webervice
+          application_name: Java CI with Maven
+          environment_name: Java CI with Maven
           version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
