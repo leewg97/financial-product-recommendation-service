@@ -2,6 +2,7 @@ package com.fastcampus.service;
 
 import com.fastcampus.domain.Bookmark;
 import com.fastcampus.domain.Cart;
+import com.fastcampus.domain.CartProduct;
 import com.fastcampus.domain.Member;
 import com.fastcampus.persistence.BookmarkRepository;
 import com.fastcampus.persistence.CartRepository;
@@ -25,7 +26,7 @@ public class MemberService {
 
     // 회원 등록
     @Transactional
-    public Member insertUser(MemberDto.Request req) {
+    public Member insertUser(MemberDto.RegisterRequest req) {
         Member member = new Member();
         member.setEmail(req.getEmail());
         member.setPassword(passwordEncoder.encode(req.getPassword()));
