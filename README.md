@@ -25,11 +25,6 @@
 - Lombok
 - JWT
 ---
-## **Git 전략**
-
-- clone 후 개별 브랜치 작업
-- commit - push 기능 구현 시 틈틈이
----
 ## **ERD**
 
 ![ERD.png](src/main/resources/static/ERD.png)
