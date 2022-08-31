@@ -26,9 +26,14 @@ public class MemberService {
 
     // 회원 등록
     @Transactional
-    public Member insertUser(Member member) {
+    public Member insertUser(MemberDto.RegisterRequest req) {
+        Member member = new Member();
+        member.setEmail(req.getEmail());
+        member.setPassword(passwordEncoder.encode(req.getPassword()));
+        member.setUsername(req.getUsername());
         member.setJob("소상공인");
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
+        member.setRegion(req.getRegion());
+        member.setHopeAmount(req.getHopeAmount());
 
         memberRepository.save(member);
 

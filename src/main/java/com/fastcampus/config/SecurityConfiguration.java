@@ -1,11 +1,11 @@
 package com.fastcampus.config;
 
-import com.fastcampus.Security.jwtFilter.JwtAuthenticationFilter;
 import com.fastcampus.Security.jwtFilter.JwtAuthorizationFilter;
 import com.fastcampus.persistence.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,6 +31,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/swagger-resources/**"
     };
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/static/css/**, /static/js/**, *.ico");
@@ -57,8 +64,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Bearer 인증 방식을 사용하겠다.
         http.httpBasic().disable();
         // 폼로그인 false
-        http.formLogin().disable();
-        http.addFilter(new JwtAuthenticationFilter(authenticationManager()));
+//        http.formLogin().disable();
+//        http.addFilter(new JwtAuthenticationFilter(authenticationManager()));
         http.addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository));
         // 다음 경로에 대한 요청은 인증 없이 접근을 허용하도록 설정한다.
         http.authorizeRequests().antMatchers("/", "/auth/**", "/home/**", "/js/**", "/image/**","/swagger-resources/**","/swagger-ui/**").permitAll();
@@ -67,12 +74,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        // 모든 경로 인증 없이 허용
 //        http.authorizeRequests().anyRequest().permitAll();
         // 사용자가 만든 로그인 화면을 띄운다.
-//        http.formLogin().loginPage("/loginForm");
+        http.formLogin().loginPage("/sigin-in");
         // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인 진행
-//        http.formLogin().usernameParameter("email");
+        http.formLogin().usernameParameter("email");
+        http.formLogin().passwordParameter("password");
 //        http.formLogin().loginProcessingUrl("/auth/login");
         // 로그인 후 메인페이지로 이동
-//        http.formLogin().defaultSuccessUrl("/");
+        http.formLogin().defaultSuccessUrl("/");
         // 로그아웃 path
         http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/");
 

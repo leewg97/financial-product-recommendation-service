@@ -12,6 +12,23 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Request {
+
+        @ApiModelProperty(value = "회원 이름")
+        private String username;
+        @ApiModelProperty(value = "회원 지역")
+        private String region;
+        @ApiModelProperty(value = "지원금")
+        private int hopeAmount;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class RegisterRequest {
+        @ApiModelProperty(value = "회원 이메일")
+        private String email;
+        @ApiModelProperty(value = "비밀번호")
+        private String password;
         @ApiModelProperty(value = "회원 이름")
         private String username;
         @ApiModelProperty(value = "회원 지역")
