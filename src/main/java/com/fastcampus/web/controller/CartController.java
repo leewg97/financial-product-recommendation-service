@@ -68,4 +68,5 @@ public class CartController {
         cartService.deleteAll(memberId);
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ORDER_CART, "장바구니 신청이 완료되었습니다."), HttpStatus.OK);
     }
+
 }

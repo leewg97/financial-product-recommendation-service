@@ -24,7 +24,7 @@ public class MemberDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class RegisterRequest {
+    public static class registerRequest {
         @ApiModelProperty(value = "회원 이메일")
         private String email;
         @ApiModelProperty(value = "비밀번호")

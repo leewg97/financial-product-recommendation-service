@@ -10,7 +10,8 @@ public class LoginDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Request {
+    public static class loginRequest
+    {
         private String email;
         private String password;
     }
@@ -22,4 +23,5 @@ public class LoginDto {
         private String email;
         private String Authorization;
     }
+
 }

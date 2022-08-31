@@ -40,7 +40,7 @@ public class MemberController {
     // 회원가입 처리
     @ApiOperation(value="회원 가입")
     @PostMapping("/auth/register")
-    public @ResponseBody ResponseEntity insertUser(@RequestBody MemberDto.RegisterRequest req) {
+    public @ResponseBody ResponseEntity insertUser(@RequestBody MemberDto.registerRequest req) {
         Member findMember = memberService.getMember(req.getEmail());
 
         if(findMember.getEmail() == null) {

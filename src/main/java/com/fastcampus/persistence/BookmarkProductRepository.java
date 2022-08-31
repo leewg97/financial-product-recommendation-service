@@ -2,7 +2,6 @@ package com.fastcampus.persistence;
 
 import com.fastcampus.domain.Bookmark;
 import com.fastcampus.domain.BookmarkProduct;
-import com.fastcampus.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
