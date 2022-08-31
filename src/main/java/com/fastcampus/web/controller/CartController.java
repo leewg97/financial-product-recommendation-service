@@ -8,6 +8,7 @@ import com.fastcampus.web.api.StatusCode;
 import com.fastcampus.web.dto.CartProductDto;
 import com.fastcampus.web.dto.ProductDto;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class CartController {
     private final CartService cartService;
 
     // 장바구니 등록
+    @ApiOperation(value="장바구니 등록")
     @PostMapping("/add")
     public @ResponseBody ResponseEntity addCart(@RequestBody CartProductDto.Request cartProductDto, Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -35,6 +37,7 @@ public class CartController {
     }
 
     // 장바구니 조회
+    @ApiOperation(value="장바구니 조회")
     @GetMapping("/find")
     public @ResponseBody ResponseEntity getCart(Authentication authentication) throws Exception {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -49,6 +52,7 @@ public class CartController {
     }
 
     // 장바구니 삭제
+    @ApiOperation(value="장바구니 삭제")
     @DeleteMapping("/{id}")
     public @ResponseBody ResponseEntity deleteCart(@PathVariable Long id) {
         cartService.deleteCartProduct(id);
@@ -56,6 +60,7 @@ public class CartController {
     }
 
     // 장바구니 신청
+    @ApiOperation(value="장바구니 신청")
     @DeleteMapping("/order")
     public @ResponseBody ResponseEntity deleteAll(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
