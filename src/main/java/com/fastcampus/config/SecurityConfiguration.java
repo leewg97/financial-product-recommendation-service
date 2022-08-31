@@ -25,7 +25,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final CorsFilter corsFilter;
 
     // 스웨거 관련 설정
-
     private static final String[] AUTH_ARR = {
             "/swagger/**",
             "/swagger-ui.html",
@@ -74,7 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        // 모든 경로 인증 없이 허용
 //        http.authorizeRequests().anyRequest().permitAll();
         // 사용자가 만든 로그인 화면을 띄운다.
-        http.formLogin().loginPage("/sigin-in");
+        http.formLogin().loginPage("/sign-in");
         // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인 진행
         http.formLogin().usernameParameter("email");
         http.formLogin().passwordParameter("password");
@@ -90,4 +89,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

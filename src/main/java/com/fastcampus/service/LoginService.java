@@ -11,8 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
@@ -23,7 +23,7 @@ public class LoginService {
 
     // 로그인
     @Transactional
-    public LoginDto.Response login(LoginDto.Request req) {
+    public LoginDto.Response login(LoginDto.loginRequest req) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
@@ -47,7 +47,7 @@ public class LoginService {
         LoginDto.Response response = new LoginDto.Response();
         response.setAuthorization(JwtProperties.TOKEN_PREFIX + jwtToken);
         response.setEmail(req.getEmail());
-        
+
         return response;
     }
 

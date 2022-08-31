@@ -37,9 +37,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // request에 있는 username과 password를 파싱해서 자바 Object로 받기
         ObjectMapper om = new ObjectMapper();
-        LoginDto.Request loginRequestDto = null;
+        LoginDto.loginRequest loginRequestDto = null;
         try {
-            loginRequestDto = om.readValue(request.getInputStream(), LoginDto.Request.class);
+            loginRequestDto = om.readValue(request.getInputStream(), LoginDto.loginRequest.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -102,4 +102,5 @@ public class BookmarkService {
         );
         return productDto;
     }
+
 }

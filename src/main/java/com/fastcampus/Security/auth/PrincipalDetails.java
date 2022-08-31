@@ -1,6 +1,5 @@
 package com.fastcampus.Security.auth;
 
-
 import com.fastcampus.domain.Member;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -57,4 +56,5 @@ public class PrincipalDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
