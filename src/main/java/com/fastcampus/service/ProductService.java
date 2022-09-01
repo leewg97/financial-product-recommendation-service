@@ -12,7 +12,6 @@ import com.fastcampus.persistence.ProductRepository;
 import com.fastcampus.web.dto.ProductDto;
 import com.fastcampus.web.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class ProductService {
 
@@ -36,11 +34,11 @@ public class ProductService {
         Member member = memberRepository.findById(memberId).orElseThrow();
         // 회원에 해당하는 찜한 북마크
         Bookmark bookmark = bookmarkRepository.findByMember(member);
-        // 해당 북마크에서의 북마크아이디와 같은것들.
+        // 해당 북마크에서의 북마크아이디와 같은것들.(상품)
         List<BookmarkProduct> bookmarkProducts = bookmarkProductRepository.findAllByBookmark(bookmark);
-
-        for (int i = 0; i <bookmarkProducts.size(); i++) {
-            if(productId == bookmarkProducts.get(i).getProduct().getId()){
+        // 해당 북마크에서의 북마크아이디와 같은것들.(상품)  과 프로덕트 아이디와 같은것들
+        for (int bookmarkProductsIndex = 0; bookmarkProductsIndex <bookmarkProducts.size(); bookmarkProductsIndex++) {
+            if(productId == bookmarkProducts.get(bookmarkProductsIndex).getProduct().getId()){
                 return true;
             }else{
                 continue;
@@ -58,8 +56,8 @@ public class ProductService {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         long memberId = principal.getMember().getId();
         // dto에 값 주입
-        for (int i = 0; i <productList.size() ; i++) {
-            Product product = productList.get(i);
+        for (int bookmarkProductsIndex = 0; bookmarkProductsIndex <productList.size() ; bookmarkProductsIndex++) {
+            Product product = productList.get(bookmarkProductsIndex);
             ProductDto.Response productResDto =new ProductDto.Response(
                     product.getId(),
                     product.getProductName(),
@@ -99,7 +97,6 @@ public class ProductService {
             int amount = findMember.getHopeAmount();
             String region = findMember.getRegion();
             List<Product> productList = productRepository.findBySupporterAmountGreaterThanEqualAndSupporterRegion(amount, region);
-            log.info(productList.toString());
             return getProductResList(productList,authentication);
         }else{
             throw new Exception("회원이 존재하지 않습니다.");

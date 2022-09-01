@@ -61,15 +61,17 @@ public class BookmarkService {
 
     // 찜 목록 리스트 조회
     @Transactional(readOnly = true)
-    public List<ProductDto.CartResponse> findBookmarks(Long id) {
+    public List<ProductDto.bookmarkResponse> findBookmarks(Long id) {
         Member findMember = memberRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
         List<BookmarkProduct> findBookmarkProducts = bookmarkProductRepository.findAllByBookmark(findMember.getBookmark());
-        List<ProductDto.CartResponse> bookmarkList = new ArrayList<>();
+        List<ProductDto.bookmarkResponse> bookmarkList = new ArrayList<>();
 
         for (int i = 0; i <findBookmarkProducts.size() ; i++) {
+
             Product product = findBookmarkProducts.get(i).getProduct();
-            ProductDto.CartResponse productResDto =new ProductDto.CartResponse(
+            ProductDto.bookmarkResponse productResDto =new ProductDto.bookmarkResponse(
+                    findBookmarkProducts.get(i).getId(),
                     product.getId(),
                     product.getProductName(),
                     product.getProductContent(),

@@ -29,6 +29,7 @@ public class CorsConfig implements WebMvcConfigurer {
         config.addAllowedHeader("*"); // 모든 header에 응답을 허용
         config.addAllowedMethod("*"); // 모든 post,get,put,delete,patch 요청을 허용
         config.addExposedHeader("Authorization");
+        config.addExposedHeader("refreshToken");
         source.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(source);

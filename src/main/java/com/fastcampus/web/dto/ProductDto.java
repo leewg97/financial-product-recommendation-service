@@ -52,8 +52,31 @@ public class ProductDto {
     @Builder
     @NoArgsConstructor
     public static class CartResponse {
-
+        @ApiModelProperty(value = "cartProductId", example = "1")
+        private Long cartProductId;
+        @ApiModelProperty(value = "상품인덱스", example = "1")
+        private Long id;
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
+        private String productName; // 상품 이름
+        @ApiModelProperty(value = "상품 내용", example = "경기침체, 재해피해 소상공인 지원")
+        private String productContent; //
+        @ApiModelProperty(value = "지원 은행", example = "정부")
+        private String supporterName; //
+        @ApiModelProperty(value = "지원 지역", example = "서울")
+        private String supporterRegion; // 지원 지역
+        @ApiModelProperty(value = "지원 금액", example = "3500000")
+        private int supporterAmount; //
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @Builder
+    @NoArgsConstructor
+    public static class bookmarkResponse {
+        @ApiModelProperty(value = "bookmarkProductId", example = "1")
+        private Long bookmarkProductId;
+        @ApiModelProperty(value = "상품인덱스", example = "1")
         private Long id;
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
         private String productName; // 상품 이름

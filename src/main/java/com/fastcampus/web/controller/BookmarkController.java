@@ -42,7 +42,7 @@ public class BookmarkController {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         Long memberId = principal.getMember().getId();
 
-        List<ProductDto.CartResponse> findCart = bookmarkService.findBookmarks(memberId);
+        List<ProductDto.bookmarkResponse> findCart = bookmarkService.findBookmarks(memberId);
 
         if (!findCart.isEmpty()) {
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.READ_BOOKMARK, bookmarkService.findBookmarks(memberId)), HttpStatus.OK);
