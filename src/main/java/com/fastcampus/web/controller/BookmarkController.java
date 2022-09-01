@@ -27,7 +27,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     // 찜 등록
-    @ApiOperation(value="찜 등록")
+    @ApiOperation(value = "찜 등록")
     @PostMapping("/add")
     public @ResponseBody ResponseEntity addBookmark(@RequestBody BookmarkProductDto.Request cartProductDto, Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -36,7 +36,7 @@ public class BookmarkController {
     }
 
     // 찜 목록 조회
-    @ApiOperation(value="찜 목록 조회")
+    @ApiOperation(value = "찜 목록 조회")
     @GetMapping("/find")
     public @ResponseBody ResponseEntity getCart(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -51,10 +51,13 @@ public class BookmarkController {
     }
 
     // 찜 삭제
-    @ApiOperation(value="찜 삭제")
-    @DeleteMapping("/{id}")
-    public @ResponseBody ResponseEntity deleteCart(@PathVariable Long id) {
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_BOOKMARK, bookmarkService.deleteBookmark(id)), HttpStatus.OK);
+    @ApiOperation(value = "찜 삭제")
+    @DeleteMapping("/{productId}")
+    public @ResponseBody ResponseEntity delete(@PathVariable Long productId, Authentication authentication) {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        Long memberId = principal.getMember().getId();
+
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_BOOKMARK,bookmarkService.delete(memberId, productId)), HttpStatus.OK);
     }
 
 }
