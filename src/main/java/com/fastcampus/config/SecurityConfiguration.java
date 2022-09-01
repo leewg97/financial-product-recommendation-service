@@ -5,6 +5,7 @@ import com.fastcampus.persistence.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -70,6 +72,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/", "/auth/**", "/home/**", "/js/**", "/image/**","/swagger-resources/**","/swagger-ui/**").permitAll();
         // 위에서 언급한 경로 외에는 모두 인증을 거치도록 설정한다.
         http.authorizeRequests().anyRequest().authenticated();
+        //인증실패시의 엔트리포인트 지정
+        http.authorizeRequests().and().exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 //        // 모든 경로 인증 없이 허용
 //        http.authorizeRequests().anyRequest().permitAll();
         // 사용자가 만든 로그인 화면을 띄운다.
