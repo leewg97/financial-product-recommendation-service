@@ -52,7 +52,10 @@ public class ProductDto {
     @Builder
     @NoArgsConstructor
     public static class CartResponse {
-
+        @ApiModelProperty(value = "cartProductId", example = "1")
+        private Long cartProductId;
+        @ApiModelProperty(value = "상품인덱스", example = "1")
+        private Long id;
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
         private Long id;
         @ApiModelProperty(value = "상품이름", example = "특별경영안전자금")
