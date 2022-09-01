@@ -86,12 +86,12 @@ public class BookmarkService {
 
     // 찜 삭제 (해당하는 제품 하나)
     @Transactional
-    public ProductDto.Response deleteBookmark(Long id) {
-        BookmarkProduct bookmarkProduct = bookmarkProductRepository.findById(id).orElseThrow();
-        Product product = productRepository.findById(bookmarkProduct.getProduct().getId()).orElseThrow();
-        Bookmark bookmark = bookmarkRepository.findById(bookmarkProduct.getBookmark().getId()).orElseThrow();
+    public ProductDto.Response delete(Long memberId, Long productId) {
 
-        bookmarkProductRepository.deleteById(id);
+        Product product = productRepository.findById(productId).orElseThrow();
+        BookmarkProduct bookmarkProduct = bookmarkProductRepository.findByBookmarkIdAndProductId(memberId, product.getId());
+
+        bookmarkProductRepository.delete(bookmarkProduct);
 
         ProductDto.Response productDto = new ProductDto.Response(
                 product.getId(),
@@ -100,7 +100,7 @@ public class BookmarkService {
                 product.getSupporterName(),
                 product.getSupporterRegion(),
                 product.getSupporterAmount(),
-                productService.isBookmark(bookmark.getMember().getId(),product.getId())
+                productService.isBookmark(memberId, product.getId())
         );
         return productDto;
     }
