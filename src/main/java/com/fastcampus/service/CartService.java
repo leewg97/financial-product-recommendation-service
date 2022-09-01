@@ -61,6 +61,7 @@ public class CartService {
         for (int i = 0; i <findCartProducts.size() ; i++) {
             Product product = findCartProducts.get(i).getProduct();
             ProductDto.CartResponse productResDto =new ProductDto.CartResponse(
+                    findCartProducts.get(i).getId(),
                     product.getId(),
                     product.getProductName(),
                     product.getProductContent(),
