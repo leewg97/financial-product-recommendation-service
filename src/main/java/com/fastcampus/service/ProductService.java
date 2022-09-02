@@ -56,16 +56,16 @@ public class ProductService {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         long memberId = principal.getMember().getId();
         // dto에 값 주입
-        for (int bookmarkProductsIndex = 0; bookmarkProductsIndex <productList.size() ; bookmarkProductsIndex++) {
-            Product product = productList.get(bookmarkProductsIndex);
+        for (int product = 0; product <productList.size() ; product++) {
+            Product findProduct = productList.get(product);
             ProductDto.Response productResDto =new ProductDto.Response(
-                    product.getId(),
-                    product.getProductName(),
-                    product.getProductContent(),
-                    product.getSupporterName(),
-                    product.getSupporterRegion(),
-                    product.getSupporterAmount(),
-                    isBookmark(memberId,product.getId())
+                    findProduct.getId(),
+                    findProduct.getProductName(),
+                    findProduct.getProductContent(),
+                    findProduct.getSupporterName(),
+                    findProduct.getSupporterRegion(),
+                    findProduct.getSupporterAmount(),
+                    isBookmark(memberId,findProduct.getId())
             );
             productDtoList.add(productResDto);
         }
