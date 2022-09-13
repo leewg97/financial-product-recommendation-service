@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "BOOKMARK_PRODCUT")
+@Table(name = "BOOKMARK_PRODUCT")
 @Entity
 @Builder
 public class BookmarkProduct {
