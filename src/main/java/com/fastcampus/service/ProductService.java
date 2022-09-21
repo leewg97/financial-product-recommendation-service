@@ -130,7 +130,7 @@ public class ProductService {
     // 상품 목록
     @Transactional
     public List<ProductDto.Response> productList(Authentication authentication) {
-        List<Product> productList =productRepository.findAll();
+        List<Product> productList = productRepository.findAll();
         return getProductResList(productList,authentication);
     }
 
