@@ -56,7 +56,7 @@ public class ProductService {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         long memberId = principal.getMember().getId();
         // dto에 값 주입
-        for (int product = 0; product <productList.size() ; product++) {
+        for (int product = 0; product < productList.size(); product++) {
             Product findProduct = productList.get(product);
             ProductDto.Response productResDto =new ProductDto.Response(
                     findProduct.getId(),
