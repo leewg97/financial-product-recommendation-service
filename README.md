@@ -10,7 +10,7 @@
 
 - IDE : IntelliJ
 - JDK : 17
-- DB : H2 1.4.199
+- DB : MySQL
 - Spring Boot : 2.7.3
 - Build : Maven
 ---
@@ -22,7 +22,6 @@
 - Spring DevTools
 - Spring Security
 - Swagger
-- Lombok
 - JWT
 ---
 ## **ERD**
