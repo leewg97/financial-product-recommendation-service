@@ -67,11 +67,11 @@ public class BookmarkService {
         List<BookmarkProduct> findBookmarkProducts = bookmarkProductRepository.findAllByBookmark(findMember.getBookmark());
         List<ProductDto.bookmarkResponse> bookmarkList = new ArrayList<>();
 
-        for (int i = 0; i <findBookmarkProducts.size() ; i++) {
+        for (BookmarkProduct findBookmarkProduct : findBookmarkProducts) {
 
-            Product product = findBookmarkProducts.get(i).getProduct();
-            ProductDto.bookmarkResponse productResDto =new ProductDto.bookmarkResponse(
-                    findBookmarkProducts.get(i).getId(),
+            Product product = findBookmarkProduct.getProduct();
+            ProductDto.bookmarkResponse productResDto = new ProductDto.bookmarkResponse(
+                    findBookmarkProduct.getId(),
                     product.getId(),
                     product.getProductName(),
                     product.getProductContent(),

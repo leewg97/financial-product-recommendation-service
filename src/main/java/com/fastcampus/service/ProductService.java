@@ -56,7 +56,7 @@ public class ProductService {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         long memberId = principal.getMember().getId();
         // dto에 값 주입
-        for (int product = 0; product <productList.size() ; product++) {
+        for (int product = 0; product < productList.size(); product++) {
             Product findProduct = productList.get(product);
             ProductDto.Response productResDto =new ProductDto.Response(
                     findProduct.getId(),
@@ -130,7 +130,7 @@ public class ProductService {
     // 상품 목록
     @Transactional
     public List<ProductDto.Response> productList(Authentication authentication) {
-        List<Product> productList =productRepository.findAll();
+        List<Product> productList = productRepository.findAll();
         return getProductResList(productList,authentication);
     }
 

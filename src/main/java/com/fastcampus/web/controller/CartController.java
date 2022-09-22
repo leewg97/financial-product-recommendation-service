@@ -30,10 +30,12 @@ public class CartController {
     // 장바구니 등록
     @ApiOperation(value="장바구니 등록")
     @PostMapping("/add")
-    public @ResponseBody ResponseEntity addCart(@RequestBody CartProductDto.Request cartProductDto, Authentication authentication) {
+    public @ResponseBody ResponseEntity addCart(
+            @RequestBody CartProductDto.Request cartProductDto, Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         Long memberId = principal.getMember().getId();
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ADD_CART, cartService.addCart(cartProductDto, memberId)), HttpStatus.OK);
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ADD_CART,
+                cartService.addCart(cartProductDto, memberId)), HttpStatus.OK);
     }
 
     // 장바구니 조회
@@ -46,9 +48,11 @@ public class CartController {
         List<ProductDto.CartResponse> findCart = cartService.findCarts(memberId);
 
         if (!findCart.isEmpty()) {
-            return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.READ_CART, cartService.findCarts(memberId)), HttpStatus.OK);
+            return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.READ_CART,
+                    cartService.findCarts(memberId)), HttpStatus.OK);
         }
-       return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.NOT_FOUNT_CART, "장바구니 목록이 존재하지 않습니다."), HttpStatus.OK);
+       return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.NOT_FOUNT_CART,
+               "장바구니 목록이 존재하지 않습니다."), HttpStatus.OK);
     }
 
     // 장바구니 삭제
@@ -56,17 +60,23 @@ public class CartController {
     @DeleteMapping("/{id}")
     public @ResponseBody ResponseEntity deleteCart(@PathVariable Long id) {
         cartService.deleteCartProduct(id);
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_CART, "장바구니 목록이 삭제 되었습니다."), HttpStatus.OK);
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.DELETE_CART,
+                "장바구니 목록이 삭제 되었습니다."), HttpStatus.OK);
     }
 
-    // 장바구니 신청
+    /**
+     * 장바구니 신청
+     * @param authentication
+     * @return
+     */
     @ApiOperation(value="장바구니 신청")
     @DeleteMapping("/order")
     public @ResponseBody ResponseEntity deleteAll(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         Long memberId = principal.getMember().getId();
         cartService.deleteAll(memberId);
-        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ORDER_CART, "장바구니 신청이 완료되었습니다."), HttpStatus.OK);
+        return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.ORDER_CART,
+                "장바구니 신청이 완료되었습니다."), HttpStatus.OK);
     }
 
 }

@@ -38,7 +38,7 @@ public class BookmarkController {
     // 찜 목록 조회
     @ApiOperation(value = "찜 목록 조회")
     @GetMapping("/find")
-    public @ResponseBody ResponseEntity getCart(Authentication authentication) {
+    public @ResponseBody ResponseEntity getBookmark(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         Long memberId = principal.getMember().getId();
 
