@@ -58,10 +58,10 @@ public class CartService {
         List<CartProduct> findCartProducts = cartProductRepository.findAllByCart(findMember.getCart());
         List<ProductDto.CartResponse> productList = new ArrayList<>();
 
-        for (int i = 0; i <findCartProducts.size() ; i++) {
-            Product product = findCartProducts.get(i).getProduct();
-            ProductDto.CartResponse productResDto =new ProductDto.CartResponse(
-                    findCartProducts.get(i).getId(),
+        for (CartProduct findCartProduct : findCartProducts) {
+            Product product = findCartProduct.getProduct();
+            ProductDto.CartResponse productResDto = new ProductDto.CartResponse(
+                    findCartProduct.getId(),
                     product.getId(),
                     product.getProductName(),
                     product.getProductContent(),
