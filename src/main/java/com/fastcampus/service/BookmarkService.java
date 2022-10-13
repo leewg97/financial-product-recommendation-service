@@ -46,7 +46,7 @@ public class BookmarkService {
         BookmarkProduct.addBookmarkProduct(bookmark, product);
         bookmarkProductRepository.save(bookmarkProduct);
 
-        ProductDto.Response productDto = new ProductDto.Response(
+        return new ProductDto.Response(
                 product.getId(),
                 product.getProductName(),
                 product.getProductContent(),
@@ -55,7 +55,6 @@ public class BookmarkService {
                 product.getSupporterAmount(),
                 productService.isBookmark(member.getId(),product.getId())
         );
-        return productDto;
     }
 
 
@@ -93,7 +92,7 @@ public class BookmarkService {
 
         bookmarkProductRepository.delete(bookmarkProduct);
 
-        ProductDto.Response productDto = new ProductDto.Response(
+        return new ProductDto.Response(
                 product.getId(),
                 product.getProductName(),
                 product.getProductContent(),
@@ -102,7 +101,6 @@ public class BookmarkService {
                 product.getSupporterAmount(),
                 productService.isBookmark(memberId, product.getId())
         );
-        return productDto;
     }
 
 }
