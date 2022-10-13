@@ -56,16 +56,15 @@ public class ProductService {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         long memberId = principal.getMember().getId();
         // dto에 값 주입
-        for (int product = 0; product < productList.size(); product++) {
-            Product findProduct = productList.get(product);
-            ProductDto.Response productResDto =new ProductDto.Response(
+        for (Product findProduct : productList) {
+            ProductDto.Response productResDto = new ProductDto.Response(
                     findProduct.getId(),
                     findProduct.getProductName(),
                     findProduct.getProductContent(),
                     findProduct.getSupporterName(),
                     findProduct.getSupporterRegion(),
                     findProduct.getSupporterAmount(),
-                    isBookmark(memberId,findProduct.getId())
+                    isBookmark(memberId, findProduct.getId())
             );
             productDtoList.add(productResDto);
         }
@@ -112,7 +111,7 @@ public class ProductService {
         long memberId = principal.getMember().getId();
         if(findProduct.isPresent()){
             Product product = findProduct.get();
-            ProductDto.Response productDto = new ProductDto.Response(
+            return new ProductDto.Response(
                     product.getId(),
                     product.getProductName(),
                     product.getProductContent(),
@@ -121,7 +120,6 @@ public class ProductService {
                     product.getSupporterAmount(),
                     isBookmark(memberId,product.getId())
             );
-            return productDto;
         }else{
             throw new Exception("해당상품은 존재하지 않습니다.");
         }
