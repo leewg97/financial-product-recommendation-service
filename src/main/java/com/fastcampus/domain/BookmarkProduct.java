@@ -26,7 +26,6 @@ public class BookmarkProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-
     public static BookmarkProduct addBookmarkProduct(Bookmark bookmark, Product product) {
         BookmarkProduct bookmarkProduct = new BookmarkProduct();
         bookmarkProduct.setBookmark(bookmark);
