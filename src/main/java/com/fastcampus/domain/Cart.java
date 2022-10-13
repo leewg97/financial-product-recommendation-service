@@ -20,7 +20,7 @@ public class Cart {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id") // FK
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
