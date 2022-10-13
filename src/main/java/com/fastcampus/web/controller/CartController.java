@@ -64,11 +64,7 @@ public class CartController {
                 "장바구니 목록이 삭제 되었습니다."), HttpStatus.OK);
     }
 
-    /**
-     * 장바구니 신청
-     * @param authentication
-     * @return
-     */
+    // 장바구니 신청
     @ApiOperation(value="장바구니 신청")
     @DeleteMapping("/order")
     public @ResponseBody ResponseEntity deleteAll(Authentication authentication) {
