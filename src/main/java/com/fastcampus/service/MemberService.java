@@ -86,7 +86,7 @@ public class MemberService {
         member.setRegion(updateMember.getRegion());
         member.setHopeAmount(updateMember.getHopeAmount());
         Member result = memberRepository.save(member);
-        MemberDto.Response resMember = new MemberDto.Response(
+        return new MemberDto.Response(
                 result.getId(),
                 result.getEmail(),
                 result.getUsername(),
@@ -94,7 +94,6 @@ public class MemberService {
                 result.getRegion(),
                 result.getHopeAmount()
         );
-        return resMember;
     }
 
 }
