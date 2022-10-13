@@ -26,7 +26,6 @@ public class CartProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-
     public static CartProduct addCartProduct(Cart cart, Product product) {
         CartProduct cartProduct = new CartProduct();
         cartProduct.setCart(cart);
