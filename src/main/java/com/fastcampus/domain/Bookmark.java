@@ -22,7 +22,7 @@ public class Bookmark {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id") // FK
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToMany(mappedBy = "bookmark", cascade = CascadeType.REMOVE)
