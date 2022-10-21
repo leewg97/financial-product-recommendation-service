@@ -23,6 +23,7 @@ public class Cart {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Builder.Default
     @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
     private List<CartProduct> cartProducts = new ArrayList<>();
 

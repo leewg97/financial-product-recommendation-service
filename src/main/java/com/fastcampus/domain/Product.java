@@ -28,9 +28,11 @@ public class Product {
 
     private int supporterAmount; // 지원 금액
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<CartProduct> cartProducts = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<BookmarkProduct> bookmarkProducts = new ArrayList<>();
 
