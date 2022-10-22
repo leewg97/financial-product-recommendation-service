@@ -10,10 +10,10 @@ import com.fastcampus.web.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MemberService {
 
@@ -24,7 +24,6 @@ public class MemberService {
     private final BookmarkRepository bookmarkRepository;
 
     // 회원 등록
-    @Transactional
     public Member insertUser(MemberDto.registerRequest req) {
         Member member = new Member();
         member.setEmail(req.getEmail());
@@ -54,7 +53,6 @@ public class MemberService {
     }
 
     // 회원가입 전 db에 같은 이름이 존재하는지 검색
-    @Transactional
     public Member getMember(String email) {
         Member findUser = memberRepository.findByEmail(email);
         if(findUser != null) {
@@ -64,7 +62,6 @@ public class MemberService {
     }
 
     // MemberDto로 회원 검색
-    @Transactional
     public MemberDto.Response resGetMember(String email) {
         Member findUser = memberRepository.findByEmail(email);
         if(findUser != null) {

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class CartService {
 
     private final CartRepository cartRepository;
@@ -75,13 +75,11 @@ public class CartService {
     }
 
     // 장바구니 삭제
-    @Transactional
     public void deleteCartProduct(Long id) {
         cartProductRepository.deleteById(id);
     }
 
     // 장바구니 신청
-    @Transactional
     public void deleteAll(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당하는 회원이 존재하지 않습니다."));
         cartProductRepository.deleteAllInBatch(member.getCart().getCartProducts());
