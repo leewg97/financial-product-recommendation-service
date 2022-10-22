@@ -14,13 +14,14 @@ import com.fastcampus.web.dto.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProductService {
 
@@ -72,7 +73,6 @@ public class ProductService {
     }
 
     // 상품 검색
-    @Transactional
     public List<ProductDto.Response> SearchProducts(ProductDto.Request productDto,Authentication authentication) {
         if (productDto.getSearchCondition().equals(SearchCondition.TITLE)) {
             List<Product> productList = productRepository.findByProductNameContaining(productDto.getSearchKeyword());
@@ -86,7 +86,6 @@ public class ProductService {
     }
 
     // 맞춤상품
-    @Transactional
     public List<ProductDto.Response> customProducts(Authentication authentication) throws Exception {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         long memberId = principal.getMember().getId();
@@ -103,7 +102,6 @@ public class ProductService {
     }
 
     // 상품 조회
-    @Transactional
     public ProductDto.Response getProduct(Long productId,Authentication authentication) throws Exception {
         Optional<Product> findProduct =  productRepository.findById(productId);
         // 토큰을 통하여 memberId를 얻어온다.
@@ -126,7 +124,6 @@ public class ProductService {
     }
 
     // 상품 목록
-    @Transactional
     public List<ProductDto.Response> productList(Authentication authentication) {
         List<Product> productList = productRepository.findAll();
         return getProductResList(productList,authentication);

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookmarkService {
 
@@ -27,7 +28,6 @@ public class BookmarkService {
 
 
     // 찜 등록
-    @Transactional
     public ProductDto.Response addBookmark(BookmarkProductDto.Request request, Long id) {
         Member member = memberRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("해당 회원이 존재하지 않습니다."));
@@ -84,7 +84,6 @@ public class BookmarkService {
     }
 
     // 찜 삭제 (해당하는 제품 하나)
-    @Transactional
     public ProductDto.Response delete(Long memberId, Long productId) {
 
         Product product = productRepository.findById(productId).orElseThrow();

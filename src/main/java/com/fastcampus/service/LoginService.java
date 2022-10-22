@@ -16,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LoginService {
 
     private final AuthenticationManager authenticationManager;
 
     // 로그인
-    @Transactional
     public LoginDto.Response login(LoginDto.loginRequest req) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
