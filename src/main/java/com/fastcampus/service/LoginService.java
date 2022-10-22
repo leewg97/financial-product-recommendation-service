@@ -35,13 +35,13 @@ public class LoginService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        PrincipalDetails principalDetailis = (PrincipalDetails) authentication.getPrincipal();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 
         String jwtToken = JWT.create()
-                .withSubject(principalDetailis.getUsername())
+                .withSubject(principalDetails.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", principalDetailis.getMember().getId())
-                .withClaim("email", principalDetailis.getMember().getEmail())
+                .withClaim("id", principalDetails.getMember().getId())
+                .withClaim("email", principalDetails.getMember().getEmail())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         LoginDto.Response response = new LoginDto.Response();
