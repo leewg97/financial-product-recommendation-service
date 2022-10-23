@@ -27,6 +27,10 @@
 - Spring Security
 - Swagger
 - JWT
+- EC2
+- RDS
+- Jenkins
+- Docker
 
 <br>
 
@@ -40,7 +44,7 @@
 
 [API 명세서 바로가기](https://www.notion.so/996655c9789b4fdfb5948e16f34628d6)
 
-- 회원 관련
+### 회원 관련
   - `POST`  
     - `/auth/register` : 회원 가입
     - `/auth/login` : 로그인
@@ -49,13 +53,14 @@
   - `PUT`
     - `/member/update` : 회원 수정
 
-- 상품 관련
+### 상품 관련
   - `GET`
     - `/products/list` : 상품 목록
     - `/products/recommend` : 맞춤 상품
     - `/products/{productId}` : 상품 조회
     - `/products/search` : 상품 검색
-- 장바구니
+
+### 장바구니
   - `POST`
     - `/carts/add` : 장바구니 등록
   - `GET`
@@ -63,7 +68,8 @@
   - `DELETE`
     - `/carts/{id}` : 장바구니 삭제
     - `/carts/order` : 장바구니 신청(신청하면 장바구니 비워지게만 구현)
-- 찜
+
+### 찜
   - `POST`
     - `/bookmarks/add` : 찜 등록
   - `GET`
