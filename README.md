@@ -1,4 +1,4 @@
-f# Financial-Product-Recommendation-Service
+# 소상공인 금융상품 
 
 ## 팀원
 |이원근<br>(BE 팀장)|이창희|김대곤|고영민|
