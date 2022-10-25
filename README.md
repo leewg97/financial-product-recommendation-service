@@ -1,7 +1,7 @@
 # 소상공인 금융상품 쇼핑몰 
 
 ## 팀원
-|이원근<br>(BE 팀장)|이창희|김대곤|고영민|
+|이원근|이창희|김대곤|고영민|
 |:----:|:----:|:----:|:----:|
 |[@leewg97](https://github.com/leewg97)|[@WindowH22](https://github.com/WindowH22)|[@bbyuggyu](https://github.com/bbyuggyu)|[@mini-inib](https://github.com/mini-inib)|
 
