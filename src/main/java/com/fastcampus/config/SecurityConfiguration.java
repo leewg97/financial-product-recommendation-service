@@ -69,7 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        http.addFilter(new JwtAuthenticationFilter(authenticationManager()));
         http.addFilter(new JwtAuthorizationFilter(authenticationManager(), memberRepository));
         // 다음 경로에 대한 요청은 인증 없이 접근을 허용하도록 설정한다.
-        http.authorizeRequests().antMatchers("/", "/auth/**", "/home/**", "/js/**", "/image/**","/swagger-resources/**","/swagger-ui/**").permitAll();
+        http.authorizeRequests().antMatchers("/", "/auth/**", "/home/**", "/js/**", "/image/**","/swagger-resources/**","/swagger-ui/**", "/health").permitAll();
         // 위에서 언급한 경로 외에는 모두 인증을 거치도록 설정한다.
         http.authorizeRequests().anyRequest().authenticated();
         //인증실패시의 엔트리포인트 지정
